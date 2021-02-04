@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feather.community.mapper.ScreenIndexMapper">
+
+    <select id="sqglSbTj" resultType="map">
+        SELECT to_char(sbzt)||','||to_char(sl) "sl" FROM (SELECT sbzt , to_char(count(*)) sl  FROM (SELECT case when sbzt = '在线' then 'sxtzx'
+                else 'sxtlx' end AS sbzt FROM  zhsq_sxt) GROUP BY sbzt) UNION
+        SELECT to_char(sbzt)||','||to_char(sl) "sl" FROM (SELECT sbzt , to_char(count(*)) sl  FROM (SELECT case when sbzt = '在线' then 'ygzx'
+                else 'yglx' end AS sbzt FROM  zhsq_yg) GROUP BY sbzt)	UNION
+        SELECT to_char(sbzt)||','||to_char(sl) "sl" FROM (SELECT sbzt , to_char(count(*)) sl  FROM (SELECT case when sbzt = '在线' then 'zjzx'
+                else 'zjlx' end AS sbzt FROM  zhsq_zj) GROUP BY sbzt)
+    </select>
+
+
+    <select id="getSfczTj" parameterType="map" resultType="map">
+        SELECT
+            concat( concat( 'total', ',' ), sl ) "sl"
+        FROM
+            ( SELECT count( jmid ) sl FROM zhsq_jm ) UNION
+        SELECT
+            concat( concat( 'czrs', ',' ), sl ) "sl"
+        FROM
+            ( SELECT count( jmid ) sl FROM zhsq_jm WHERE sfcz = #{ czrk } ) UNION
+        SELECT
+            concat( concat( 'ldrs', ',' ), sl ) "sl"
+        FROM
+            ( SELECT count( jmid ) sl FROM zhsq_jm WHERE sfcz = #{ wlrk } )
+    </select>
+
+    <!--重点人员人数统计-->
+    <select id="getZdryrsTj" parameterType="map" resultType="map">
+        SELECT
+            concat( concat( 'total', ',' ), sl ) "sl"
+        FROM
+            ( SELECT count( jmid ) sl FROM zhsq_jm
+            <where>
+                <if test="sfzh != null  and sfzh != ''"> or SFZH = #{sfzh}</if>
+                <if test="sffz != null  and sffz != ''"> or SFFZ = #{sffz}</if>
+                <if test="sfdj != null  and sfdj != ''"> or SFDJ = #{sfdj}</if>
+                <if test="sfkc != null  and sfkc != ''"> or SFKC = #{sfkc}</if>
+                <if test="sfxmsf != null  and sfxmsf != ''"> or SFXMSF = #{sfxmsf}</if>
+                <if test="sftyjr != null  and sftyjr != ''"> or SFTYJR = #{sftyjr}</if>
+                <if test="sfdb != null  and sfdb != ''"> or SFDB = #{sfdb}</if>
+                <if test="sfcj != null  and sfcj != ''"> or SFCJ = #{sfcj}</if>
+            </where>) UNION
+        SELECT
+            concat( concat( 'djlr', ',' ), sl ) "sl"
+        FROM
+            ( SELECT count( jmid ) sl FROM zhsq_jm
+            <where>
+                <if test="sfdj != null  and sfdj != ''"> and SFDJ = #{sfdj}</if>
+            </where>) UNION
+        SELECT
+            concat( concat( 'kclr', ',' ), sl ) "sl"
+            FROM
+            ( SELECT count( jmid ) sl FROM zhsq_jm
+            <where>
+                <if test="sfkc != null  and sfkc != ''"> and SFKC = #{sfkc}</if>
+            </where>) UNION
+        SELECT
+            concat( concat( 'xmsf', ',' ), sl ) "sl"
+            FROM
+            ( SELECT count( jmid ) sl FROM zhsq_jm
+            <where>
+                <if test="sfxmsf != null  and sfxmsf != ''"> and SFXMSF = #{sfxmsf}</if>
+            </where>) UNION
+        SELECT
+            concat( concat( 'tyjr', ',' ), sl ) "sl"
+            FROM
+            ( SELECT count( jmid ) sl FROM zhsq_jm
+            <where>
+                <if test="sftyjr != null  and sftyjr != ''"> and SFTYJR = #{sftyjr}</if>
+            </where>) UNION
+        SELECT
+            concat( concat( 'dbry', ',' ), sl ) "sl"
+            FROM
+            ( SELECT count( jmid ) sl FROM zhsq_jm
+            <where>
+                <if test="sfdb != null  and sfdb != ''"> and SFDB = #{sfdb}</if>
+            </where>) UNION
+        SELECT
+            concat( concat( 'cjry', ',' ), sl ) "sl"
+            FROM
+            ( SELECT count( jmid ) sl FROM zhsq_jm
+            <where>
+                <if test="sfcj != null  and sfcj != ''"> and SFCJ = #{sfcj}</if>
+            </where>)
+    </select>
+
+    <select id="getNljgTjByJm" parameterType="map" resultType="map">
+        SELECT nl "keys", to_char(count(*)) "sl" FROM (SELECT case when to_number(nl) <![CDATA[ < ]]> 20 then '20以下'
+        when to_number(nl) <![CDATA[ >= ]]> 20 and to_number(nl) <![CDATA[ <= ]]> 30 then '20-30'
+        when to_number(nl) > 30 and to_number(nl) <![CDATA[ <= ]]> 40 then '31-40'
+        when to_number(nl) > 40 and to_number(nl) <![CDATA[ <= ]]> 50 then '41-50'
+        when to_number(nl) > 50 and to_number(nl) <![CDATA[ <= ]]> 60 then '51-60'
+        else '60以上' end AS nl FROM  zhsq_jm
+        <where>
+            <if test="sfzh != null  and sfzh != ''"> or SFZH = #{sfzh}</if>
+            <if test="sffz != null  and sffz != ''"> or SFFZ = #{sffz}</if>
+            <if test="sfdj != null  and sfdj != ''"> or SFDJ = #{sfdj}</if>
+            <if test="sfkc != null  and sfkc != ''"> or SFKC = #{sfkc}</if>
+            <if test="sfxmsf != null  and sfxmsf != ''"> or SFXMSF = #{sfxmsf}</if>
+            <if test="sftyjr != null  and sftyjr != ''"> or SFTYJR = #{sftyjr}</if>
+            <if test="sfdb != null  and sfdb != ''"> or SFDB = #{sfdb}</if>
+            <if test="sfcj != null  and sfcj != ''"> or SFCJ = #{sfcj}</if>
+        </where>) GROUP BY nl
+    </select>
+
+    <select id="getXbTjByJm" parameterType="map" resultType="map">
+        SELECT
+            xb "keys",
+            to_char(
+            count( * )) "sl"
+        FROM
+            ( SELECT CASE WHEN xb = '男' THEN '男' ELSE '女' END AS xb FROM zhsq_jm
+            <where>
+                <if test="sfzh != null  and sfzh != ''"> or SFZH = #{sfzh}</if>
+                <if test="sffz != null  and sffz != ''"> or SFFZ = #{sffz}</if>
+                <if test="sfdj != null  and sfdj != ''"> or SFDJ = #{sfdj}</if>
+                <if test="sfkc != null  and sfkc != ''"> or SFKC = #{sfkc}</if>
+                <if test="sfxmsf != null  and sfxmsf != ''"> or SFXMSF = #{sfxmsf}</if>
+                <if test="sftyjr != null  and sftyjr != ''"> or SFTYJR = #{sftyjr}</if>
+                <if test="sfdb != null  and sfdb != ''"> or SFDB = #{sfdb}</if>
+                <if test="sfcj != null  and sfcj != ''"> or SFCJ = #{sfcj}</if>
+            </where>)
+        GROUP BY
+            xb
+    </select>
+
+    <select id="getMzTjByJm" parameterType="map" resultType="map">
+        SELECT to_char(count( * )) "sl", mz "keys" FROM (
+            SELECT
+                CASE WHEN mz = '汉族' THEN '汉族'
+                     WHEN mz = '回族' THEN '回族'
+                     WHEN mz = '苗族' THEN '苗族'
+                     WHEN mz = '土家族' THEN '土家族'
+                     WHEN mz = '藏族' THEN '藏族' ELSE '其他' END AS mz
+            FROM zhsq_jm
+            <where>
+                <if test="sfzh != null  and sfzh != ''"> or SFZH = #{sfzh}</if>
+                <if test="sffz != null  and sffz != ''"> or SFFZ = #{sffz}</if>
+                <if test="sfdj != null  and sfdj != ''"> or SFDJ = #{sfdj}</if>
+                <if test="sfkc != null  and sfkc != ''"> or SFKC = #{sfkc}</if>
+                <if test="sfxmsf != null  and sfxmsf != ''"> or SFXMSF = #{sfxmsf}</if>
+                <if test="sftyjr != null  and sftyjr != ''"> or SFTYJR = #{sftyjr}</if>
+                <if test="sfdb != null  and sfdb != ''"> or SFDB = #{sfdb}</if>
+                <if test="sfcj != null  and sfcj != ''"> or SFCJ = #{sfcj}</if>
+            </where> ) GROUP BY mz
+    </select>
+
+    <!--党政队伍统计-->
+    <select id="getDzdwTj" parameterType="map" resultType="map">
+        SELECT
+            concat( concat( 'dzz', ',' ), sl ) "sl"
+        FROM
+            ( SELECT count( dzzid ) sl FROM zhsq_dzz ) UNION
+        SELECT
+            concat( concat( 'dy', ',' ), sl ) "sl"
+        FROM
+            ( SELECT count( dyid ) sl FROM zhsq_dy )
+    </select>
+
+    <!--党员学历统计-->
+    <select id="getDyxlfbTj" parameterType="map" resultType="map">
+        SELECT to_char(count( * )) "sl", xl "keys" FROM (
+            SELECT
+                CASE WHEN  xl = '大专' THEN '大专'
+                     WHEN xl = '本科' THEN '本科'
+                     WHEN xl = '硕士' THEN '硕士'
+                     WHEN xl = '博士' THEN '博士'
+                     WHEN xl = '高中' THEN '高中' ELSE '高中以下' END AS xl
+            FROM zhsq_dy )
+        GROUP BY xl
+    </select>
+
+    <!--党员年龄分布统计-->
+    <select id="getDynlfbTj" parameterType="map" resultType="map">
+        SELECT nl "keys", to_char(count(*)) "sl" FROM (SELECT case when to_number(nl) <![CDATA[ < ]]> 20 then '20以下'
+        when to_number(nl) <![CDATA[ >= ]]> 20 and to_number(nl) <![CDATA[ <= ]]> 30 then '20-30'
+        when to_number(nl) > 30 and to_number(nl) <![CDATA[ <= ]]> 40 then '31-40'
+        when to_number(nl) > 40 and to_number(nl) <![CDATA[ <= ]]> 50 then '41-50'
+        when to_number(nl) > 50 and to_number(nl) <![CDATA[ <= ]]> 60 then '51-60'
+        else '60以上' end AS nl FROM  zhsq_dy) GROUP BY nl
+    </select>
+
+    <!--党员性别比例统计-->
+    <select id="getDyxbblTj" parameterType="map" resultType="map">
+         SELECT
+            xb "keys",
+            to_char(
+            count( * )) "sl"
+        FROM
+            ( SELECT CASE WHEN xb = '男' THEN '男' ELSE '女' END AS xb FROM zhsq_dy )
+        GROUP BY
+            xb
+
+    </select>
+
+    <!--党员民族比例统计-->
+    <select id="getDymzblTj" parameterType="map" resultType="map">
+        SELECT to_char(count( * )) "sl", mz "keys" FROM (
+            SELECT
+                CASE WHEN  mz = '汉族' THEN '汉族'
+                     WHEN mz = '回族' THEN '回族'
+                     WHEN mz = '苗族' THEN '苗族'
+                     WHEN mz = '土家族' THEN '土家族'
+                     WHEN mz = '藏族' THEN '藏族' ELSE '其他' END AS mz
+            FROM zhsq_dy
+        ) GROUP BY mz
+    </select>
+
+    <!--重点人员分布统计-->
+    <select id="getZdryfbTj" parameterType="map" resultType="map">
+        SELECT a.sl "sl", b.ldmc "keys" FROM (
+	        SELECT to_char(count( * )) sl, ldid FROM zhsq_jm
+            <where>
+                <if test="sfzh != null  and sfzh != ''"> or SFZH = #{sfzh}</if>
+                <if test="sffz != null  and sffz != ''"> or SFFZ = #{sffz}</if>
+                <if test="sfdj != null  and sfdj != ''"> or SFDJ = #{sfdj}</if>
+                <if test="sfkc != null  and sfkc != ''"> or SFKC = #{sfkc}</if>
+                <if test="sfxmsf != null  and sfxmsf != ''"> or SFXMSF = #{sfxmsf}</if>
+                <if test="sftyjr != null  and sftyjr != ''"> or SFTYJR = #{sftyjr}</if>
+                <if test="sfdb != null  and sfdb != ''"> or SFDB = #{sfdb}</if>
+                <if test="sfcj != null  and sfcj != ''"> or SFCJ = #{sfcj}</if>
+            </where>
+	        GROUP BY ldid ) a INNER JOIN zhsq_ld b ON a.ldid = b.ldid
+    </select>
+</mapper>

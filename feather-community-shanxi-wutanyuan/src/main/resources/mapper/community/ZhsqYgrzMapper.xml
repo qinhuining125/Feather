@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feather.community.mapper.ZhsqYgrzMapper">
+    
+    <resultMap type="ZhsqYgrz" id="ZhsqYgrzResult">
+        <result property="sbrzid"    column="sbrzid"    />
+        <result property="sn"    column="sn"    />
+        <result property="imsi"    column="imsi"    />
+        <result property="rssi"    column="rssi"    />
+        <result property="baterry"    column="baterry"    />
+        <result property="infotype"    column="infotype"    />
+        <result property="content"    column="content"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="createByid"    column="create_byid"    />
+        <result property="updateByid"    column="update_byid"    />
+    </resultMap>
+
+    <sql id="selectZhsqYgrzVo">
+        select sbrzid, sn, imsi, rssi, baterry, infotype, content, create_by, create_time, update_by, update_time, remark, create_byid, update_byid, ygid from ZHSQ_YGRZ
+    </sql>
+
+    <select id="selectZhsqYgrzList" parameterType="ZhsqYgrz" resultMap="ZhsqYgrzResult">
+        <include refid="selectZhsqYgrzVo"/>
+        <where>
+            <if test="sbrzid != null  and sbrzid != ''"> and sbrzid = #{sbrzid}</if>
+            <if test="sn != null  and sn != ''"> and sn = #{sn}</if>
+            <if test="imsi != null and imsi != ''"> and imsi = #{imsi}</if>
+            <if test="rssi != null  and rssi != ''"> and rssi = #{rssi}</if>
+            <if test="baterry != null  and baterry != ''"> and baterry = #{baterry}</if>
+            <if test="infotype != null "> and infotype = #{infotype}</if>
+            <if test="content != null "> and content = #{content}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="remark != null  and remark != ''"> and remark = #{remark}</if>
+        </where>
+    </select>
+    
+    <select id="selectZhsqYgrzById" parameterType="String" resultMap="ZhsqYgrzResult">
+        <include refid="selectZhsqYgrzVo"/>
+        where sbrzid = #{sbrzid}
+    </select>
+        
+    <insert id="insertZhsqYgrz" parameterType="ZhsqYgrz">
+        insert into ZHSQ_YGRZ
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sbrzid != null  and sbrzid != ''">sbrzid,</if>
+            <if test="sn != null  and sn != ''">sn,</if>
+            <if test="imsi != null ">imsi,</if>
+            <if test="rssi != null  and rssi != ''">rssi,</if>
+            <if test="baterry != null  and baterry != ''">baterry,</if>
+            <if test="infotype != null ">infotype,</if>
+            <if test="content != null ">content,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+            <if test="createByid != null ">create_byid,</if>
+            <if test="updateByid != null ">update_byid,</if>
+            <if test="ygid != null  and ygid != ''">ygid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sbrzid != null  and sbrzid != ''">#{sbrzid},</if>
+            <if test="sn != null  and sn != ''">#{sn},</if>
+            <if test="imsi != null ">#{imsi},</if>
+            <if test="rssi != null  and rssi != ''">#{rssi},</if>
+            <if test="baterry != null  and baterry != ''">#{baterry},</if>
+            <if test="infotype != null ">#{infotype},</if>
+            <if test="content != null ">#{content},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+            <if test="createByid != null ">#{createByid},</if>
+            <if test="updateByid != null ">#{updateByid},</if>
+            <if test="ygid != null  and ygid != ''">#{ygid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateZhsqYgrz" parameterType="ZhsqYgrz">
+        update ZHSQ_YGRZ
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sn != null  and sn != ''">sn = #{sn},</if>
+            <if test="imsi != null ">imsi = #{imsi},</if>
+            <if test="rssi != null  and rssi != ''">rssi = #{rssi},</if>
+            <if test="baterry != null  and baterry != ''">baterry = #{baterry},</if>
+            <if test="infotype != null ">infotype = #{infotype},</if>
+            <if test="content != null ">content = #{content},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="createByid != null ">create_byid = #{createByid},</if>
+            <if test="updateByid != null ">update_byid = #{updateByid},</if>
+            <if test="ygid != null  and ygid != ''">ygid = #{ygid},</if>
+        </trim>
+        where sbrzid = #{sbrzid}
+    </update>
+
+    <delete id="deleteZhsqYgrzById" parameterType="String">
+        delete from ZHSQ_YGRZ where sbrzid = #{sbrzid}
+    </delete>
+
+    <delete id="deleteZhsqYgrzByIds" parameterType="String">
+        delete from ZHSQ_YGRZ where sbrzid in 
+        <foreach item="sbrzid" collection="array" open="(" separator="," close=")">
+            #{sbrzid}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feather.community.mapper.ZhsqShMapper">
+
+    <resultMap type="ZhsqSh" id="ZhsqShResult">
+        <result property="shid"    column="shid"    />
+        <result property="sblx"    column="sblx"    />
+        <result property="sbmc"    column="sbmc"    />
+        <result property="ppmc"    column="ppmc"    />
+        <result property="sbxh"    column="sbxh"    />
+        <result property="sbzt"    column="sbzt"    />
+        <result property="imei"    column="imei"    />
+        <result property="jmid"    column="jmid"    />
+        <result property="xm"    column="xm"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    jdbcType="BIGINT" />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    jdbcType="BIGINT" />
+        <result property="remark"    column="remark"    />
+        <result property="createByid"    column="create_byid"    />
+        <result property="updateByid"    column="update_byid"    />
+    </resultMap>
+
+    <sql id="selectZhsqShVo">
+        select shid, sblx, sbmc, ppmc, sbxh, sbzt, imei, jmid, xm, create_by, create_time, update_by, update_time, remark, create_byid, update_byid from zhsq_sh
+    </sql>
+
+    <select id="selectZhsqShList" parameterType="ZhsqSh" resultMap="ZhsqShResult">
+        <include refid="selectZhsqShVo"/>
+        <where>
+        </where>
+    </select>
+
+    <select id="selectZhsqShByImei" parameterType="String" resultMap="ZhsqShResult">
+        <include refid="selectZhsqShVo"/>
+        where imei = #{imei}
+    </select>
+
+    <select id="selectZhsqShById" parameterType="String" resultMap="ZhsqShResult">
+        <include refid="selectZhsqShVo"/>
+        where shid = #{shid}
+    </select>
+
+    <insert id="insertZhsqSh" parameterType="ZhsqSh">
+        insert into zhsq_sh
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shid != null  and shid != ''">shid,</if>
+            <if test="sblx != null  and sblx != ''">sblx,</if>
+            <if test="sbmc != null  and sbmc != ''">sbmc,</if>
+            <if test="ppmc != null  and ppmc != ''">ppmc,</if>
+            <if test="sbxh != null  and sbxh != ''">sbxh,</if>
+            <if test="sbzt != null  and sbzt != ''">sbzt,</if>
+            <if test="imei != null  and imei != ''">imei,</if>
+            <if test="jmid != null  and jmid != ''">jmid,</if>
+            <if test="xm != null  and xm != ''">xm,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+            <if test="createByid != null ">create_byid,</if>
+            <if test="updateByid != null ">update_byid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shid != null  and shid != ''">#{shid},</if>
+            <if test="sblx != null  and sblx != ''">#{sblx},</if>
+            <if test="sbmc != null  and sbmc != ''">#{sbmc},</if>
+            <if test="ppmc != null  and ppmc != ''">#{ppmc},</if>
+            <if test="sbxh != null  and sbxh != ''">#{sbxh},</if>
+            <if test="sbzt != null  and sbzt != ''">#{sbzt},</if>
+            <if test="imei != null  and imei != ''">#{imei},</if>
+            <if test="jmid != null  and jmid != ''">#{jmid},</if>
+            <if test="xm != null  and xm != ''">#{xm},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime, jdbcType=BIGINT},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime, jdbcType=BIGINT},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+            <if test="createByid != null ">#{createByid},</if>
+            <if test="updateByid != null ">#{updateByid},</if>
+        </trim>
+    </insert>
+
+    <update id="updateZhsqSh" parameterType="ZhsqSh">
+        update zhsq_sh
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sblx != null  and sblx != ''">sblx = #{sblx},</if>
+            <if test="sbmc != null  and sbmc != ''">sbmc = #{sbmc},</if>
+            <if test="ppmc != null  and ppmc != ''">ppmc = #{ppmc},</if>
+            <if test="sbxh != null  and sbxh != ''">sbxh = #{sbxh},</if>
+            <if test="sbzt != null  and sbzt != ''">sbzt = #{sbzt},</if>
+            <if test="imei != null  and imei != ''">imei = #{imei},</if>
+            <if test="jmid != null  and jmid != ''">jmid = #{jmid},</if>
+            <if test="xm != null  and xm != ''">xm = #{xm},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime, jdbcType=BIGINT},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime, jdbcType=BIGINT},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="createByid != null ">create_byid = #{createByid},</if>
+            <if test="updateByid != null ">update_byid = #{updateByid},</if>
+        </trim>
+        where shid = #{shid}
+    </update>
+
+    <delete id="deleteZhsqShById" parameterType="String">
+        delete from zhsq_sh where shid = #{shid}
+    </delete>
+
+    <delete id="deleteZhsqShByIds" parameterType="String">
+        delete from zhsq_sh where shid in
+        <foreach item="shid" collection="array" open="(" separator="," close=")">
+            #{shid}
+        </foreach>
+    </delete>
+
+</mapper>

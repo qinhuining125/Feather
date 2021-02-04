@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改手环日志')" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-shrz-edit" th:object="${SHRZ}">
+        <input id="shrzid" name="shrzid" th:field="*{shrzid}" type="hidden">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">高压：</label>
+            <div class="col-sm-8">
+                <input name="gy" th:field="*{high}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">低压：</label>
+            <div class="col-sm-8">
+                <input name="dy" th:field="*{low}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">心率：</label>
+            <div class="col-sm-8">
+                <input name="xl" th:field="*{heartRate}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">血氧：</label>
+            <div class="col-sm-8">
+                <input name="xy" th:field="*{bloodOxygen}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">体温：</label>
+            <div class="col-sm-8">
+                <input name="tw" th:field="*{temperature}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">基站纬度：</label>
+            <div class="col-sm-8">
+                <input name="dw" th:field="*{nodeBLat}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">基站经度：</label>
+            <div class="col-sm-8">
+                <input name="dw" th:field="*{nodeBLng}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">电量：</label>
+            <div class="col-sm-8">
+                <input name="dl" th:field="*{battery}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">报警：</label>
+            <div class="col-sm-8">
+                <input name="bj" th:field="*{alarmState}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">是否佩戴：</label>
+            <div class="col-sm-8">
+                <input name="sfpd" th:field="*{wearState}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">是否充电：</label>
+            <div class="col-sm-8">
+                <input name="sfcd" th:field="*{chargeState}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">手环ID：</label>
+            <div class="col-sm-8">
+                <input name="shid" th:field="*{shid}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">备注：</label>
+            <div class="col-sm-8">
+                <input name="remark" th:field="*{remark}" class="form-control" type="text">
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<script type="text/javascript">
+    var prefix = ctx + "community/SHRZ";
+    $("#form-shrz-edit").validate({
+        focusCleanup: true
+    });
+
+    function isAdd() {
+        return $("#shrzid").val() ? false : true;
+    }
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save({
+                url: prefix + (isAdd() ? "/add" : "/edit"),
+                data: $('#form-shrz-edit').serialize(),
+                success: function(result, _option) {
+                    if (isAdd()) {
+                        if (result.data.shrzid) {
+                            top.formmsg = result.msg;
+                            location.href = prefix + "/edit/" + result.data.shrzid;
+                        } else {
+                            $.modal.msgError("没有返回数据：shrzid");
+                        }
+                    } else {
+                        $.modal.msgSuccess(result.msg);
+                    }
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>

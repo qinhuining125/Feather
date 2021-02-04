@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feather.community.mapper.ZhsqXqMapper">
+    
+    <resultMap type="ZhsqXq" id="ZhsqXqResult">
+        <result property="xqid"    column="xqid"    />
+        <result property="xqmc"    column="xqmc"    />
+        <result property="jj"      column="jj"    />
+        <result property="x"       column="x"    />
+        <result property="y"       column="y"    />
+        <result property="z"       column="z"    />
+        <result property="sqid"    column="sqid"    />
+        <result property="ssjd"    column="ssjd"    />
+    </resultMap>
+
+    <sql id="selectZhsqXqVo">
+        select xqid, xqmc, jj, x, y, z, sqid, ssjd from zhsq_xq
+    </sql>
+
+    <select id="selectZhsqXqList" parameterType="ZhsqXq" resultMap="ZhsqXqResult">
+        <include refid="selectZhsqXqVo"/>
+        <where>  
+            <if test="xqmc != null  and xqmc != ''"> and xqmc = #{xqmc}</if>
+            <if test="jj != null  and jj != ''"> and jj = #{jj}</if>
+            <if test="x != null  and x != ''"> and x = #{x}</if>
+            <if test="y != null  and y != ''"> and y = #{y}</if>
+            <if test="z != null  and z != ''"> and z = #{z}</if>
+        </where>
+    </select>
+
+    <select id="selectZhsqXqType" resultType="map">
+        SELECT xqid AS "dictLabel", xqmc AS "dictValue" FROM zhsq_xq
+    </select>
+
+    <select id="selectZhsqXqById" parameterType="String" resultMap="ZhsqXqResult">
+        <include refid="selectZhsqXqVo"/>
+        where xqid = #{xqid}
+    </select>
+        
+    <insert id="insertZhsqXq" parameterType="ZhsqXq">
+        insert into zhsq_xq
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="xqid != null  and xqid != ''">xqid,</if>
+            <if test="xqmc != null  and xqmc != ''">xqmc,</if>
+            <if test="jj != null  and jj != ''">jj,</if>
+            <if test="x != null  and x != ''">x,</if>
+            <if test="y != null  and y != ''">y,</if>
+            <if test="z != null  and z != ''">z,</if>
+            <if test="sqid != null  and sqid != ''">sqid,</if>
+            <if test="ssjd != null  and ssjd != ''">ssjd,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="xqid != null  and xqid != ''">#{xqid},</if>
+            <if test="xqmc != null  and xqmc != ''">#{xqmc},</if>
+            <if test="jj != null  and jj != ''">#{jj},</if>
+            <if test="x != null  and x != ''">#{x},</if>
+            <if test="y != null  and y != ''">#{y},</if>
+            <if test="z != null  and z != ''">#{z},</if>
+            <if test="sqid != null  and sqid != ''">#{sqid},</if>
+            <if test="ssjd != null  and ssjd != ''">#{ssjd},</if>
+         </trim>
+    </insert>
+
+    <update id="updateZhsqXq" parameterType="ZhsqXq">
+        update zhsq_xq
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="xqmc != null  and xqmc != ''">xqmc = #{xqmc},</if>
+            <if test="jj != null  and jj != ''">jj = #{jj},</if>
+            <if test="x != null  and x != ''">x = #{x},</if>
+            <if test="y != null  and y != ''">y = #{y},</if>
+            <if test="z != null  and z != ''">z = #{z},</if>
+            <if test="sqid != null  and sqid != ''">sqid = #{sqid},</if>
+            <if test="ssjd != null  and ssjd != ''">ssjd = #{ssjd},</if>
+        </trim>
+        where xqid = #{xqid}
+    </update>
+
+    <delete id="deleteZhsqXqById" parameterType="String">
+        delete from zhsq_xq where xqid = #{xqid}
+    </delete>
+
+    <delete id="deleteZhsqXqByIds" parameterType="String">
+        delete from zhsq_xq where xqid in
+        <foreach item="xqid" collection="array" open="(" separator="," close=")">
+            #{xqid}
+        </foreach>
+    </delete>
+    
+</mapper>

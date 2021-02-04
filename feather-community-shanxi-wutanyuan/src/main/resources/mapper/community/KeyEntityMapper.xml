@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feather.community.mapper.KeyEntityMapper">
+    
+    <resultMap type="KeyEntity" id="KeyEntityResult">
+        <result property="type"    column="type"    />
+        <result property="list"    column="list"    />
+        <result property="key"      column="key"    />
+        <result property="name"    column="name"    />
+        <result property="color"    column="color"    />
+        <result property="val1"    column="val1"    />
+        <result property="val2"    column="val2"    />
+        <result property="val3"    column="val3"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectKeyEntityVo">
+        select type, list, key, name, color, val1, val2, val3, remark from key_entity
+    </sql>
+
+    <select id="selectKeyEntityList" parameterType="KeyEntity" resultMap="KeyEntityResult">
+        <include refid="selectKeyEntityVo"/>
+        <where>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="list != null  and list != ''"> and list = #{list}</if>
+            <if test="key != null  and key != ''"> and key = #{key}</if>
+            <if test="name != null  and name != ''"> and name = #{name}</if>
+        </where>
+    </select>
+
+    <select id="selectKeyEntityListByType" parameterType="string" resultMap="KeyEntityResult">
+        <include refid="selectKeyEntityVo"/>
+        <where>
+            type = #{type}
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('手环日志列表')" />
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            <p>手环日志ID：</p>
+                            <input type="text" name="shrzid"/>
+                        </li>
+                        <li>
+                            <p>高压：</p>
+                            <input type="text" name="high"/>
+                        </li>
+                        <li>
+                            <p>低压：</p>
+                            <input type="text" name="low"/>
+                        </li>
+                        <li>
+                            <p>心率：</p>
+                            <input type="text" name="heartRate"/>
+                        </li>
+                        <li>
+                            <p>血氧：</p>
+                            <input type="text" name="bloodOxygen"/>
+                        </li>
+                        <li>
+                            <p>体温：</p>
+                            <input type="text" name="temperature"/>
+                        </li>
+                        <li>
+                            <p>定位：</p>
+                            <input type="text" name="dw"/>
+                        </li>
+                        <li>
+                            <p>电量：</p>
+                            <input type="text" name="battery"/>
+                        </li>
+                        <li>
+                            <p>报警：</p>
+                            <input type="text" name="alarmState"/>
+                        </li>
+                        <li>
+                            <p>创建者：</p>
+                            <input type="text" name="createBy"/>
+                        </li>
+                        <li>
+                            <p>创建时间：</p>
+                            <input type="text" name="createTime"/>
+                        </li>
+                        <li>
+                            <p>更新者：</p>
+                            <input type="text" name="updateBy"/>
+                        </li>
+                        <li>
+                            <p>更新时间：</p>
+                            <input type="text" name="updateTime"/>
+                        </li>
+                        <li>
+                            <p>备注：</p>
+                            <input type="text" name="remark"/>
+                        </li>
+                        <li>
+                            <p>创建者：</p>
+                            <input type="text" name="createByid"/>
+                        </li>
+                        <li>
+                            <p>更新者：</p>
+                            <input type="text" name="updateByid"/>
+                        </li>
+                        <li>
+                            <p>是否佩戴：</p>
+                            <input type="text" name="wearState"/>
+                        </li>
+                        <li>
+                            <p>是否充电：</p>
+                            <input type="text" name="chargeState"/>
+                        </li>
+                        <li>
+                            <p>手环ID：</p>
+                            <input type="text" name="shid"/>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i> 搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i> 重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="dev:shrz:add">
+                <i class="fa fa-plus"></i> 添加
+            </a>
+            <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="dev:shrz:edit">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="dev:shrz:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="dev:shrz:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('dev:shrz:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('dev:shrz:remove')}]];
+    var shrzidDatas = [[${@dict.getType('${column.dictType}')}]];
+    var gyDatas = [[${@dict.getType('${column.dictType}')}]];
+    var dyDatas = [[${@dict.getType('${column.dictType}')}]];
+    var xlDatas = [[${@dict.getType('${column.dictType}')}]];
+    var xyDatas = [[${@dict.getType('${column.dictType}')}]];
+    var twDatas = [[${@dict.getType('${column.dictType}')}]];
+    var dwDatas = [[${@dict.getType('${column.dictType}')}]];
+    var dlDatas = [[${@dict.getType('${column.dictType}')}]];
+    var bjDatas = [[${@dict.getType('${column.dictType}')}]];
+    var createByDatas = [[${@dict.getType('${column.dictType}')}]];
+    var createTimeDatas = [[${@dict.getType('${column.dictType}')}]];
+    var updateByDatas = [[${@dict.getType('${column.dictType}')}]];
+    var updateTimeDatas = [[${@dict.getType('${column.dictType}')}]];
+    var remarkDatas = [[${@dict.getType('${column.dictType}')}]];
+    var createByidDatas = [[${@dict.getType('${column.dictType}')}]];
+    var updateByidDatas = [[${@dict.getType('${column.dictType}')}]];
+    var sfpdDatas = [[${@dict.getType('${column.dictType}')}]];
+    var sfcdDatas = [[${@dict.getType('${column.dictType}')}]];
+    var shidDatas = [[${@dict.getType('${column.dictType}')}]];
+    var prefix = ctx + "community/SHRZ";
+
+    $(function() {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "手环日志",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field : 'shrzid',
+                    title : '手环日志ID',
+                    visible: false
+                },
+                {
+                    field : 'high',
+                    title : '高压'
+                },
+                {
+                    field : 'low',
+                    title : '低压'
+                },
+                {
+                    field : 'heartRate',
+                    title : '心率'
+                },
+                {
+                    field : 'bloodOxygen',
+                    title : '血氧'
+                },
+                {
+                    field : 'temperature',
+                    title : '体温'
+                },
+                {
+                    field : 'nodeBLat',
+                    title : '基站纬度'
+                },
+                {
+                    field : 'nodeBLng',
+                    title : '基站经度'
+                },
+                {
+                    field : 'battery',
+                    title : '电量'
+                },
+                {
+                    field : 'alarmState',
+                    title : '报警'
+                },
+                {
+                    field : 'wearState',
+                    title : '是否佩戴'
+                },
+                {
+                    field : 'chargeState',
+                    title : '是否充电'
+                },
+                {
+                    field : 'shid',
+                    title : '手环ID'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.shrzid + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.shrzid + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+</script>
+</body>
+</html>

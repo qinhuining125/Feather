@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改居民')" />
+    <th:block th:include="include :: select2-css" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-JM-edit" th:object="${JM}">
+        <input id="jmid" name="jmid" th:field="*{jmid}" type="hidden">
+        <h4 class="form-header h4">基本信息</h4>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">姓名：</label>
+                    <div class="col-sm-8">
+                        <input name="xm" th:field="*{xm}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">性别：</label>
+                    <div class="col-sm-8">
+                        <select name="xb" class="form-control m-b" th:with="type=${@dict.getType('zhsq_xb')}">
+                            <option th:each="dict:${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{xb}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">电话：</label>
+                    <div class="col-sm-8">
+                        <input name="dh" th:field="*{dh}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">年龄：</label>
+                    <div class="col-sm-8">
+                        <input name="nl" th:field="*{nl}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">籍贯：</label>
+                    <div class="col-sm-8">
+                        <input name="jg" th:field="*{jg}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">户籍性质：</label>
+                    <div class="col-sm-8">
+                        <select name="hjxz" class="form-control m-b" th:with="type=${@dict.getType('zhsq_hjxz')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{hjxz}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">民族：</label>
+                    <div class="col-sm-8">
+                        <select name="mz" class="form-control m-b" th:with="type=${@dict.getType('zhsq_mz')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{mz}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">政治面貌：</label>
+                    <div class="col-sm-8">
+                        <select name="zzmm" class="form-control m-b" th:with="type=${@dict.getType('zhsq_zzmm')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{zzmm}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">学历：</label>
+                    <div class="col-sm-8">
+                        <select name="xl" class="form-control m-b" th:with="type=${@dict.getType('zhsq_xl')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{xl}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">住址：</label>
+                    <div class="col-sm-8">
+                        <select name="fwid" class="form-control m-b" th:with="type=${@wty.getFwType()}">
+                            <option th:each="dict:${type}" th:text="${dict.dictValue}" th:value="${dict.dictLabel}" th:field="*{fwid}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否房主(是,否)：</label>
+                    <div class="col-sm-8">
+                        <select name="sffz" class="form-control m-b" th:with="type=${@dict.getType('zhsq_sf')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{sffz}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否租户(是,否)：</label>
+                    <div class="col-sm-8">
+                        <select name="sfzh" class="form-control m-b" th:with="type=${@dict.getType('zhsq_sf')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{sfzh}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否独居老人(是,否)：</label>
+                    <div class="col-sm-8">
+                        <select name="sfdj" class="form-control m-b" th:with="type=${@dict.getType('zhsq_sf')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{sfdj}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否空巢老人(是,否)：</label>
+                    <div class="col-sm-8">
+                        <select name="sfkc" class="form-control m-b" th:with="type=${@dict.getType('zhsq_sf')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{sfkc}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否刑满释放(是,否)：</label>
+                    <div class="col-sm-8">
+                        <select name="sfxmsf" class="form-control m-b" th:with="type=${@dict.getType('zhsq_sf')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{sfxmsf}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否退役军人(是,否)：</label>
+                    <div class="col-sm-8">
+                        <select name="sftyjr" class="form-control m-b" th:with="type=${@dict.getType('zhsq_sf')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{sftyjr}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否低保(是,否)：</label>
+                    <div class="col-sm-8">
+                        <select name="sfdb" class="form-control m-b" th:with="type=${@dict.getType('zhsq_sf')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{sfdb}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否残疾人(是,否)：</label>
+                    <div class="col-sm-8">
+                        <select name="sfcj" class="form-control m-b" th:with="type=${@dict.getType('zhsq_sf')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{sfcj}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+            </div>
+            <div class="col-sm-6">
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+        <!--<div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">附件：</label>
+                    <div class="col-sm-8">
+                        <div id="zbt-table">
+                        </div>
+                        <div style="height:10px;width:100%;"></div>
+                        <form id="uploadAttachForm" enctype="multipart/form-data">
+                            <div class="fileinput fileinput-new" style="text-align:center;">
+                                <div>
+                                    <span class="btn btn-primary btn-file">
+                                        <span class="fileinput-new ">选择附件</span>
+                                        <input type="file" id="attachesBtn" name="attachesBtn" onchange="uploadAttaches()" multiple="multiple"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <h4 class="form-header h4">其他信息</h4>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">备注：</label>
+                    <div class="col-xs-10">
+                        <textarea name="remark" maxlength="500" class="form-control" rows="3">[[*{remark}]]</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: select2-js" />
+<script type="text/javascript">
+    var prefix = ctx + "community/JM";
+    $("#form-JM-edit").validate({
+        focusCleanup: true
+    });
+
+    function isAdd() {
+        return $("#jmid").val() ? false : true;
+    }
+
+    function uploadAttaches() {
+        uploadAttaches({
+            ctx: ctx
+        });
+    }
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save({
+                url: prefix + (isAdd() ? "/add" : "/edit"),
+                data: $('#form-JM-edit').serialize(),
+                success: function(result, _option) {
+                    if (isAdd()) {
+                        if (result.data.jmid) {
+                            top.formmsg = result.msg;
+                            location.href = prefix + "/edit/" + result.data.jmid;
+                        } else {
+                            $.modal.msgError("没有返回数据：jmid");
+                        }
+                    } else {
+                        $.modal.msgSuccess(result.msg);
+                    }
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feather.community.mapper.ZhsqDyMapper">
+    
+    <resultMap type="ZhsqDy" id="ZhsqDyResult">
+        <result property="dyid"    column="dyid"    />
+        <result property="xm"      column="xm"    />
+        <result property="xb"      column="xb"    />
+        <result property="nl"      column="nl"    />
+        <result property="dylx"    column="dylx"    />
+        <result property="mz"      column="mz"    />
+        <result property="xl"      column="xl"    />
+        <result property="dl"      column="dl"    />
+        <result property="ssdzz"   column="ssdzz"    />
+        <result property="dzzid"   column="dzzid"    />
+        <result property="zz"      column="zz"    />
+        <result property="lxdh"    column="lxdh"    />
+        <result property="jmid"    column="jmid"    />
+        <result property="sfzyz"   column="sfzyz"    />
+        <result property="xqid"    column="xqid"    />
+        <result property="sqid"    column="sqid"    />
+    </resultMap>
+
+    <sql id="selectZhsqDyVo">
+        select dyid, xm, xb, nl, dylx, mz, xl, dl, ssdzz, dzzid, zz, lxdh, jmid, sfzyz, xqid, sqid from zhsq_dy
+    </sql>
+
+    <select id="selectZhsqDyList" parameterType="ZhsqDy" resultMap="ZhsqDyResult">
+        <include refid="selectZhsqDyVo"/>
+        <where>  
+            <if test="dyid != null  and dyid != ''"> and dyid = #{dyid}</if>
+            <if test="xm != null  and xm != ''">
+                <bind name="_xm" value="'%'+ xm +'%'"/>
+                AND xm like #{_xm}
+            </if>
+            <if test="xb != null  and xb != ''"> and xb = #{xb}</if>
+            <if test="nl != null  and nl != ''"> and nl = #{nl}</if>
+            <if test="dylx != null  and dylx != ''"> and dylx = #{dylx}</if>
+            <if test="mz != null  and mz != ''"> and mz = #{mz}</if>
+            <if test="xl != null  and xl != ''"> and xl = #{xl}</if>
+            <if test="dl != null  and dl != ''"> and dl = #{dl}</if>
+            <if test="ssdzz != null  and ssdzz != ''"> and ssdzz = #{ssdzz}</if>
+            <if test="dzzid != null  and dzzid != ''"> and dyid = #{dyid}</if>
+            <if test="zz != null  and zz != ''"> and zz = #{zz}</if>
+            <if test="lxdh != null  and lxdh != ''"> and lxdh = #{lxdh}</if>
+            <if test="jmid != null  and jmid != ''"> and jmid = #{jmid}</if>
+            <if test="sfzyz != null  and sfzyz != ''"> and sfzyz = #{sfzyz}</if>
+            <if test="xqid != null  and xqid != ''"> and xqid = #{xqid}</if>
+            <if test="sqid != null  and sqid != ''"> and sqid = #{sqid}</if>
+        </where>
+    </select>
+    
+    <select id="selectZhsqDyById" parameterType="String" resultMap="ZhsqDyResult">
+        <include refid="selectZhsqDyVo"/>
+        where dyid = #{dyid}
+    </select>
+        
+    <insert id="insertZhsqDy" parameterType="ZhsqDy">
+        insert into zhsq_dy
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dyid != null  and dyid != ''">dyid,</if>
+            <if test="xm != null  and xm != ''">xm,</if>
+            <if test="xb!= null  and xb != ''">xb,</if>
+            <if test="nl != null  and nl != ''">nl,</if>
+            <if test="dylx != null  and dylx != ''">dylx,</if>
+            <if test="mz != null  and mz != ''">mz,</if>
+            <if test="xl != null  and xl != ''">xl,</if>
+            <if test="dl != null  and dl != ''">dl,</if>
+            <if test="ssdzz != null  and ssdzz != ''">ssdzz,</if>
+            <if test="dzzid != null  and dzzid != ''">dzzid,</if>
+            <if test="zz != null  and zz != ''">zz,</if>
+            <if test="lxdh != null  and lxdh != ''">lxdh,</if>
+            <if test="jmid != null  and jmid != ''">jmid,</if>
+            <if test="sfzyz != null  and sfzyz != ''">sfzyz,</if>
+            <if test="xqid != null  and xqid != ''">xqid,</if>
+            <if test="sqid != null  and sqid != ''">sqid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dyid != null  and dyid != ''">#{dyid},</if>
+            <if test="xm != null  and xm != ''">#{xm},</if>
+            <if test="xb != null  and xb != ''">#{xb},</if>
+            <if test="nl != null  and nl != ''">#{nl},</if>
+            <if test="dylx != null  and dylx != ''">#{dylx},</if>
+            <if test="mz != null  and mz != ''">#{mz},</if>
+            <if test="xl != null  and xl != ''">#{xl},</if>
+            <if test="dl != null  and dl != ''">#{dl},</if>
+            <if test="ssdzz != null  and ssdzz != ''">#{ssdzz},</if>
+            <if test="dzzid != null  and dzzid != ''">#{dzzid},</if>
+            <if test="zz != null  and zz != ''">#{zz},</if>
+            <if test="lxdh != null  and lxdh != ''">#{lxdh},</if>
+            <if test="jmid != null  and jmid != ''">#{jmid},</if>
+            <if test="sfzyz != null  and sfzyz != ''">#{sfzyz},</if>
+            <if test="xqid != null  and xqid != ''">#{xqid},</if>
+            <if test="sqid != null  and sqid != ''">#{sqid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateZhsqDy" parameterType="ZhsqDy">
+        update zhsq_dy
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="xm != null  and xm != ''">xm = #{xm},</if>
+            <if test="xb != null  and xb != ''">xb = #{xb},</if>
+            <if test="nl != null  and nl != ''">nl = #{nl},</if>
+            <if test="dylx != null  and dylx != ''">dylx = #{dylx},</if>
+            <if test="mz != null  and mz != ''">mz = #{mz},</if>
+            <if test="xl != null  and xl != ''">xl = #{xl},</if>
+            <if test="dl != null  and dl != ''">dl = #{dl},</if>
+            <if test="ssdzz != null  and ssdzz != ''">ssdzz = #{ssdzz},</if>
+            <if test="dzzid != null  and dzzid != ''">dzzid = #{dzzid},</if>
+            <if test="zz != null  and zz != ''">zz = #{zz},</if>
+            <if test="lxdh != null  and lxdh != ''">lxdh = #{lxdh},</if>
+            <if test="jmid != null  and jmid != ''">jmid = #{jmid},</if>
+            <if test="sfzyz != null  and sfzyz != ''">sfzfz = #{sfzyz},</if>
+            <if test="xqid != null  and xqid != ''">xqid = #{xqid},</if>
+            <if test="sqid != null  and sqid != ''">sqid = #{sqid},</if>
+        </trim>
+        where dyid = #{dyid}
+    </update>
+
+    <delete id="deleteZhsqDyById" parameterType="String">
+        delete from zhsq_dy where dyid = #{dyid}
+    </delete>
+
+    <delete id="deleteZhsqDyByIds" parameterType="String">
+        delete from zhsq_dy where dyid in
+        <foreach item="dyid" collection="array" open="(" separator="," close=")">
+            #{dyid}
+        </foreach>
+    </delete>
+    
+</mapper>

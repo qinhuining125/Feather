@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feather.community.mapper.ZhsqJgMapper">
+    
+    <resultMap type="ZhsqJg" id="ZhsqJgResult">
+        <result property="jgid"    column="jgid"    />
+        <result property="xqid"    column="xqid"    />
+        <result property="ldid"    column="ldid"    />
+        <result property="wz"    column="wz"    />
+        <result property="z"    column="z"    />
+        <result property="y"    column="y"    />
+        <result property="sqid"    column="sqid"    />
+        <result property="sbzt"    column="sbzt"    />
+        <result property="sbxh"    column="sbxh"    />
+        <result property="ppmc"    column="ppmc"    />
+        <result property="sbmc"    column="sbmc"    />
+        <result property="sblx"    column="sblx"    />
+        <result property="x"    column="x"    />
+    </resultMap>
+
+    <sql id="selectZhsqJgVo">
+        select jgid, xqid, ldid, wz, z, y, sqid, sbzt, sbxh, ppmc, sbmc, sblx, x from ZHSQ_JG
+    </sql>
+
+    <select id="selectZhsqJgList" parameterType="ZhsqJg" resultMap="ZhsqJgResult">
+        <include refid="selectZhsqJgVo"/>
+        <where>  
+            <if test="jgid != null  and jgid != ''"> and jgid = #{jgid}</if>
+            <if test="xqid != null  and xqid != ''"> and xqid = #{xqid}</if>
+            <if test="ldid != null  and ldid != ''"> and ldid = #{ldid}</if>
+            <if test="wz != null  and wz != ''"> and wz = #{wz}</if>
+            <if test="z != null  and z != ''"> and z = #{z}</if>
+            <if test="y != null  and y != ''"> and y = #{y}</if>
+            <if test="sqid != null  and sqid != ''"> and sqid = #{sqid}</if>
+            <if test="sbzt != null  and sbzt != ''"> and sbzt = #{sbzt}</if>
+            <if test="sbxh != null  and sbxh != ''"> and sbxh = #{sbxh}</if>
+            <if test="ppmc != null  and ppmc != ''"> and ppmc = #{ppmc}</if>
+            <if test="sbmc != null  and sbmc != ''"> and sbmc = #{sbmc}</if>
+            <if test="sblx != null  and sblx != ''"> and sblx = #{sblx}</if>
+            <if test="x != null  and x != ''"> and x = #{x}</if>
+        </where>
+    </select>
+    
+    <select id="selectZhsqJgById" parameterType="String" resultMap="ZhsqJgResult">
+        <include refid="selectZhsqJgVo"/>
+        where jgid = #{jgid}
+    </select>
+        
+    <insert id="insertZhsqJg" parameterType="ZhsqJg">
+        insert into ZHSQ_JG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="jgid != null  and jgid != ''">jgid,</if>
+            <if test="xqid != null  and xqid != ''">xqid,</if>
+            <if test="ldid != null  and ldid != ''">ldid,</if>
+            <if test="wz != null  and wz != ''">wz,</if>
+            <if test="z != null  and z != ''">z,</if>
+            <if test="y != null  and y != ''">y,</if>
+            <if test="sqid != null  and sqid != ''">sqid,</if>
+            <if test="sbzt != null  and sbzt != ''">sbzt,</if>
+            <if test="sbxh != null  and sbxh != ''">sbxh,</if>
+            <if test="ppmc != null  and ppmc != ''">ppmc,</if>
+            <if test="sbmc != null  and sbmc != ''">sbmc,</if>
+            <if test="sblx != null  and sblx != ''">sblx,</if>
+            <if test="x != null  and x != ''">x,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="jgid != null  and jgid != ''">#{jgid},</if>
+            <if test="xqid != null  and xqid != ''">#{xqid},</if>
+            <if test="ldid != null  and ldid != ''">#{ldid},</if>
+            <if test="wz != null  and wz != ''">#{wz},</if>
+            <if test="z != null  and z != ''">#{z},</if>
+            <if test="y != null  and y != ''">#{y},</if>
+            <if test="sqid != null  and sqid != ''">#{sqid},</if>
+            <if test="sbzt != null  and sbzt != ''">#{sbzt},</if>
+            <if test="sbxh != null  and sbxh != ''">#{sbxh},</if>
+            <if test="ppmc != null  and ppmc != ''">#{ppmc},</if>
+            <if test="sbmc != null  and sbmc != ''">#{sbmc},</if>
+            <if test="sblx != null  and sblx != ''">#{sblx},</if>
+            <if test="x != null  and x != ''">#{x},</if>
+         </trim>
+    </insert>
+
+    <update id="updateZhsqJg" parameterType="ZhsqJg">
+        update ZHSQ_JG
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sblx != null  and sblx != ''">sblx = #{sblx},</if>
+            <if test="sbmc != null  and sbmc != ''">sbmc = #{sbmc},</if>
+            <if test="ppmc != null  and ppmc != ''">ppmc = #{ppmc},</if>
+            <if test="sbxh != null  and sbxh != ''">sbxh = #{sbxh},</if>
+            <if test="sbzt != null  and sbzt != ''">sbzt = #{sbzt},</if>
+            <if test="x != null ">x = #{x},</if>
+            <if test="y != null ">y = #{y},</if>
+            <if test="z != null  and z != ''">z = #{z},</if>
+            <if test="wz != null  and wz != ''">wz = #{wz},</if>
+            <if test="ldid != null  and ldid != ''">ldid = #{ldid},</if>
+            <if test="xqid != null  and xqid != ''">xqid = #{xqid},</if>
+            <if test="sqid != null  and sqid != ''">sqid = #{sqid},</if>
+        </trim>
+        where jgid = #{jgid}
+    </update>
+
+    <delete id="deleteZhsqJgById" parameterType="String">
+        delete from ZHSQ_JG where jgid = #{jgid}
+    </delete>
+
+    <delete id="deleteZhsqJgByIds" parameterType="String">
+        delete from ZHSQ_JG where jgid in 
+        <foreach item="jgid" collection="array" open="(" separator="," close=")">
+            #{jgid}
+        </foreach>
+    </delete>
+    
+</mapper>

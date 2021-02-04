@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feather.community.mapper.ZhsqZnafMapper">
+
+    <!--设备类型统计-->
+    <select id="getCountSb" resultType="map">
+        select count(*) as num,sblx from ZHSQ_ZC n
+        <where>
+            <choose>
+                <when test="xqid!=null and xqid!=''">n.XQID=#{xqid}</when>
+                <otherwise>n.sqid=#{sqid}</otherwise>
+            </choose>
+        </where>
+        GROUP BY sblx
+    </select>
+    <!--获取异常数据-->
+    <select id="getYcList" resultType="map">
+        select top(10)* from ZHSQ_YC n
+        <where>
+            <choose>
+                <when test="xqid!=null and xqid!=''">n.XQID=#{xqid}</when>
+                <otherwise>n.sqid=#{sqid}</otherwise>
+            </choose>
+        </where>
+        ORDER BY YCSJ desc
+    </select>
+    <!--门禁进出统计-->
+    <select id="getCountMj" resultType="map">
+        select Count(*)as num,jczt from ZHSQ_MJJC n
+        <where>
+            <choose>
+                <when test="xqid!=null and xqid!=''">n.XQID=#{xqid}</when>
+                <otherwise>n.sqid=#{sqid}</otherwise>
+            </choose>
+        </where>
+        GROUP BY JCZT
+    </select>
+
+    <select id="getMjjcList" resultType="map">
+        select * from ZHSQ_MJJC n
+        <where>
+            <choose>
+                <when test="xqid!=null and xqid!=''">n.XQID=#{xqid}</when>
+                <otherwise>n.sqid=#{sqid}</otherwise>
+            </choose>
+        </where>
+        ORDER BY JCSJ desc
+    </select>
+    <!--闸机进出统计-->
+    <select id="getCountZj" resultType="map">
+        select Count(*)as num,jczt from ZHSQ_ZJJC n
+        <where>
+            <choose>
+                <when test="xqid!=null and xqid!=''">n.XQID=#{xqid}</when>
+                <otherwise>n.sqid=#{sqid}</otherwise>
+            </choose>
+        </where>
+        GROUP BY JCZT
+    </select>
+
+    <select id="getZjjcList" resultType="map">
+        select * from ZHSQ_ZJJC n
+        <where>
+            <choose>
+                <when test="xqid!=null and xqid!=''">n.XQID=#{xqid}</when>
+                <otherwise>n.sqid=#{sqid}</otherwise>
+            </choose>
+        </where>
+        ORDER BY JCSJ desc
+    </select>
+
+    <!--道杆进出统计-->
+    <select id="getCountDg" resultType="map">
+        select Count(*)as num,jczt from ZHSQ_DGJC n
+        <where>
+            <choose>
+                <when test="xqid!=null and xqid!=''">n.XQID=#{xqid}</when>
+                <otherwise>n.sqid=#{sqid}</otherwise>
+            </choose>
+        </where>
+        GROUP BY JCZT
+    </select>
+
+    <select id="getDgjcList" resultType="map">
+        select * from ZHSQ_DGJC n
+        <where>
+            <choose>
+                <when test="xqid!=null and xqid!=''">n.XQID=#{xqid}</when>
+                <otherwise>n.sqid=#{sqid}</otherwise>
+            </choose>
+        </where>
+        ORDER BY JCSJ desc
+    </select>
+
+    <select id="getSxtList" resultType="map">
+        SELECT * FROM [dbo].[ZHSQ_SXT] n
+
+        <where>
+            wzlx= #{wzlx}
+            <choose>
+                <when test="xqid!=null and xqid!=''">and n.XQID=#{xqid}</when>
+                <otherwise>and n.sqid=#{sqid}</otherwise>
+            </choose>
+        </where>
+    </select>
+
+
+    <!--设备统计-->
+    <select id="getSbtj" resultType="map">
+        SELECT SBLX as type,count(*) as num from ZHSQ_ZC n
+        <where>
+            <choose>
+                <when test="xqid!=null and xqid!=''">n.XQID=#{xqid}</when>
+                <otherwise>n.sqid=#{sqid}</otherwise>
+            </choose>
+        </where>
+        group by n.SBLX
+    </select>
+
+    <!--报警统计-->
+    <select id="getBjtj" resultType="map">
+        SELECT SJLX as type,count(*) as num from ZHSQ_YC n
+        <where>
+            <choose>
+                <when test="xqid!=null and xqid!=''">
+                    n.XQID=#{xqid}
+                </when>
+                <otherwise>
+                    n.sqid=#{sqid}
+                </otherwise>
+            </choose>
+        </where>
+        group by SJLX
+    </select>
+
+    <!--报警处置-->
+    <select id="getBjcz" resultType="map">
+        SELECT CZZT as type,count(*) as num from ZHSQ_YC n
+        <where>
+            <choose>
+                <when test="xqid!=null and xqid!=''">n.XQID=#{xqid}</when>
+                <otherwise>n.sqid=#{sqid}</otherwise>
+            </choose>
+        </where>
+        GROUP BY CZZT
+    </select>
+
+    <!--异常内容-->
+    <select id="getYcnr" resultType="map">
+        SELECT YCID,YCSJ, YCNR ,YCJB, CZZT ,YCLY from ZHSQ_YC n
+        <where>
+            <choose>
+                <when test="xqid!=null and xqid!=''">n.XQID=#{xqid}</when>
+                <otherwise>n.sqid=#{sqid}</otherwise>
+            </choose>
+        </where>
+        and n.czzt='未处置' order by CZSJ
+    </select>
+
+    <!--视频列表-->
+    <select id="getSplb" resultType="map">
+
+          select  b.JCSJ, a.WZLX,  a.SBMC ,a.WZ,a.SBZT FROM ZHSQ_SXT a left join ZHSQ_SXTJC b on a.SXTID = b.SXTID
+
+    </select>
+
+    <!--门禁出入-->
+    <select id="getMjjc" resultType="map">
+        select t.SBMC, t.WZ, t.JCSJ, t.JCZT, t.ZZ,t.XM,t.URL from (SELECT m.SBMC, m.WZ, m.JCSJ, m.JCZT,
+        m.ZZ,m.XM,n.URL,rownum as no FROM (select y.SBMC, y.WZ, y.JCSJ, y.JCZT , y.XM,y.ZZ ,x.SXTID from (select c.SBMC,
+        c.WZ, c.JCSJ, c.JCZT , c.XM,d.ZZ FROM
+        (select b.SBMC, b.WZ, a.JCSJ, a.JCZT ,a.JMID ,a.XM from ZHSQ_MJJC a LEFT JOIN ZHSQ_MJ b on a.MJID=b.MJID) c
+        LEFT JOIN ZHSQ_JM d on c.JMID=d.JMID) y LEFT JOIN ZHSQ_SXT x on x.WZ=y.WZ) m LEFT JOIN ZHSQ_SXTJC n ON
+        m.SXTID=n.SXTID
+        <where>
+            <if test="jczt!=null and jczt!=''">m.jczt=#{jczt}</if>
+        </where>
+        ) t where no between (#{page}-1)*#{size}+1 and #{page}*#{size}
+
+    </select>
+
+    <!--门禁出入总数-->
+    <select id="getMjjcCount" resultType="Integer">
+        select count(1) from (SELECT m.SBMC, m.WZ, m.JCSJ, m.JCZT, m.ZZ,m.XM,n.URL,rownum as no FROM (select y.SBMC,
+        y.WZ, y.JCSJ, y.JCZT , y.XM,y.ZZ ,x.SXTID from (select c.SBMC, c.WZ, c.JCSJ, c.JCZT , c.XM,d.ZZ FROM
+        (select b.SBMC, b.WZ, a.JCSJ, a.JCZT ,a.JMID ,a.XM from ZHSQ_MJJC a LEFT JOIN ZHSQ_MJ b on a.MJID=b.MJID) c
+        LEFT JOIN ZHSQ_JM d on c.JMID=d.JMID) y LEFT JOIN ZHSQ_SXT x on x.WZ=y.WZ) m LEFT JOIN ZHSQ_SXTJC n ON
+        m.SXTID=n.SXTID
+        <where>
+            <if test="jczt!=null and jczt!=''">m.jczt=#{jczt}</if>
+        </where>
+        ) t
+    </select>
+
+    <!--门禁出入总记录-->
+    <select id="getMj" resultType="map">
+SELECT m.SBMC, m.WZ, m.JCSJ, m.JCZT, m.ZZ,m.XM,n.URL  FROM (select y.SBMC, y.WZ, y.JCSJ, y.JCZT , y.XM,y.ZZ ,x.SXTID from (select c.SBMC, c.WZ, c.JCSJ, c.JCZT , c.XM,d.ZZ FROM
+    (select b.SBMC, b.WZ, a.JCSJ, a.JCZT ,a.JMID ,a.XM from ZHSQ_MJJC a LEFT JOIN ZHSQ_MJ b  on a.MJID=b.MJID) c
+                  LEFT JOIN  ZHSQ_JM d on  c.JMID=d.JMID) y LEFT JOIN ZHSQ_SXT x  on x.WZ=y.WZ) m LEFT JOIN ZHSQ_SXTJC n ON m.SXTID=n.SXTID
+    </select>
+
+
+    <!--道杆车辆出入-->
+    <select id="getDgjc" resultType="map">
+        select t.SBMC ,t.WZ, t.JCSJ,t.JCZT, t.JMID, t.CZXM ,t.CPHM,t.CLLX,t.CX, t.ZZ, t.SXTID,t.URL from (SELECT m.SBMC
+        ,m.WZ, m.JCSJ,m.JCZT, m.JMID, m.CZXM ,m.CPHM,m.CLLX,m.CX, m.ZZ, m.SXTID,n.URL, rownum as no from
+        (select y.SBMC ,y.WZ, y.JCSJ,y.JCZT, y.JMID, y.CZXM ,y.CPHM,y.CLLX,y.CX, y.ZZ, x.SXTID from
+        (SELECT c.SBMC ,c.WZ, c.JCSJ,c.JCZT, c.JMID, c.CZXM ,c.CPHM,c.CLLX,c.CX,d.ZZ from
+        (select b.SBMC ,b.WZ, a.JCSJ,a.JCZT, a.JMID, a.CZXM ,a.CPHM,a.CLLX,a.CX
+        FROM ZHSQ_DGJC a LEFT JOIN ZHSQ_DG b on a.DGID=b.DGID) c LEFT JOIN ZHSQ_JM d ON c.JMID=d.JMID) y
+        LEFT JOIN ZHSQ_SXT x on x.WZ=y.WZ) m LEFT JOIN ZHSQ_SXTJC n ON m.SXTID=n.SXTID
+        <where>
+            <if test="jczt!=null and jczt!=''">m.jczt=#{jczt}</if>
+        </where>
+        ) t where no between (#{page}-1)*#{size}+1 and #{page}*#{size}
+    </select>
+
+    <!-- 道杆车辆出入总数-->
+    <select id="getDgjcCount" resultType="Integer">
+        select count(1) from (SELECT m.SBMC ,m.WZ, m.JCSJ,m.JCZT, m.JMID, m.CZXM ,m.CPHM,m.CLLX,m.CX, m.ZZ,
+        m.SXTID,n.URL ,rownum as no from
+        (select y.SBMC ,y.WZ, y.JCSJ,y.JCZT, y.JMID, y.CZXM ,y.CPHM,y.CLLX,y.CX, y.ZZ, x.SXTID from
+        (SELECT c.SBMC ,c.WZ, c.JCSJ,c.JCZT, c.JMID, c.CZXM ,c.CPHM,c.CLLX,c.CX,d.ZZ from
+        (select b.SBMC ,b.WZ, a.JCSJ,a.JCZT, a.JMID, a.CZXM ,a.CPHM,a.CLLX,a.CX
+        FROM ZHSQ_DGJC a LEFT JOIN ZHSQ_DG b on a.DGID=b.DGID) c LEFT JOIN ZHSQ_JM d ON c.JMID=d.JMID) y
+        LEFT JOIN ZHSQ_SXT x on x.WZ=y.WZ) m LEFT JOIN ZHSQ_SXTJC n ON m.SXTID=n.SXTID
+        <where>
+            <if test="jczt!=null and jczt!=''">m.jczt=#{jczt}</if>
+        </where>
+        ) t
+
+    </select>
+
+    <!--道杆车辆出入总记录-->
+    <select id="getDg" resultType="map">
+   SELECT  m.SBMC ,m.WZ, m.JCSJ,m.JCZT, m.JMID, m.CZXM ,m.CPHM,m.CLLX,m.CX, m.ZZ, m.SXTID,n.URL from
+     (select y.SBMC ,y.WZ, y.JCSJ,y.JCZT, y.JMID, y.CZXM ,y.CPHM,y.CLLX,y.CX, y.ZZ, x.SXTID from
+         (SELECT c.SBMC ,c.WZ, c.JCSJ,c.JCZT, c.JMID, c.CZXM ,c.CPHM,c.CLLX,c.CX,d.ZZ  from
+        (select b.SBMC ,b.WZ, a.JCSJ,a.JCZT, a.JMID, a.CZXM ,a.CPHM,a.CLLX,a.CX
+    FROM ZHSQ_DGJC a LEFT JOIN ZHSQ_DG b  on a.DGID=b.DGID) c LEFT JOIN ZHSQ_JM d ON  c.JMID=d.JMID) y
+   LEFT JOIN  ZHSQ_SXT x on x.WZ=y.WZ) m LEFT JOIN  ZHSQ_SXTJC n ON m.SXTID=n.SXTID
+
+    </select>
+
+    <!--烟感展示-->
+    <select id="getYgzs" resultType="map">
+    select t.SBMC, t.PPMC, t.X, t.Y, t.Z, t.WZ,t.SBZT from (select SBMC ,PPMC , X,Y,Z ,WZ,SBZT ,rownum as no  FROM ZHSQ_YG) t
+       where no between (#{page}-1)*#{size}+1 and #{page}*#{size}
+    </select>
+
+    <!--烟感展示总记录-->
+    <select id="getYg" resultType="map">
+    select SBMC ,PPMC , X,Y,Z ,WZ,SBZT FROM ZHSQ_YG
+    </select>
+
+    <!--烟感展示总数-->
+    <select id="getYgzsCount" resultType="Integer">
+    select count(1) from (select SBMC ,PPMC , X,Y,Z ,WZ,SBZT ,rownum as no  FROM ZHSQ_YG) t
+    </select>
+
+    <!--井盖展示-->
+    <select id="getJgzs" resultType="map">
+   select t.SBMC, t.PPMC, t.X, t.Y, t.Z, t.WZ,t.SBZT from (select SBMC ,PPMC , X,Y,Z ,WZ ,SBZT,rownum as no  FROM ZHSQ_JG) t
+       where no between (#{page}-1)*#{size}+1 and #{page}*#{size}
+    </select>
+
+    <!--井盖展示总记录-->
+    <select id="getJg" resultType="map">
+   select SBMC ,PPMC , X,Y,Z ,WZ ,SBZT,rownum as no  FROM ZHSQ_JG
+    </select>
+
+    <!--井盖展示总数-->
+    <select id="getJgzsCount" resultType="Integer">
+    select count(1) from (select SBMC ,PPMC , X,Y,Z ,WZ ,SBZT,rownum as no  FROM ZHSQ_JG) t
+    </select>
+
+
+    <!--水表展示-->
+    <select id="getSbzs" resultType="map">
+   select t.SBMC, t.PPMC, t.X, t.Y, t.Z, t.WZ ,t.SBZT ,t.DRYS, t.DYYS,t.ZYSL from (select a.SBMC ,a.PPMC , a.X, a.Y , a.Z , a.WZ , a.SBZT , b.DRYS ,b.DYYS,b.ZYSL,rownum as no  FROM ZHSQ_SB a LEFT JOIN  ZHSQ_SBJC b ON a.SBID=b.SBID) t
+       where no between (#{page}-1)*#{size}+1 and #{page}*#{size}
+    </select>
+
+    <!--水表展示总记录-->
+    <select id="getSb" resultType="map">
+  select a.SBMC ,a.PPMC , a.X, a.Y , a.Z , a.WZ , a.SBZT , b.DRYS ,b.DYYS,b.ZYSL  FROM ZHSQ_SB a LEFT JOIN  ZHSQ_SBJC b ON a.SBID=b.SBID
+
+    </select>
+
+    <!--水表展示总数-->
+    <select id="getSbzsCount" resultType="Integer">
+    select count(1) from (select a.SBMC ,a.PPMC , a.X, a.Y , a.Z , a.WZ , a.SBZT , b.DRYS,b.DYYS,b.ZYSL ,rownum as no  FROM ZHSQ_SB a LEFT JOIN  ZHSQ_SBJC b ON a.SBID=b.SBID) t
+    </select>
+
+
+
+
+    <!--新闻公告/通知-->
+    <select id="getXwgg" resultType="map">
+   select t.GGLX,t.BT,t.NR,t.FBSJ,t.FBRY,t.XXLY FROM ZHSQ_GG t
+        <where>
+            <choose>
+                <when test="xqid!=null and xqid!=''">t.XQID=#{xqid}</when>
+                <otherwise>n.sqid=#{sqid}</otherwise>
+            </choose>
+        </where>
+        order by t.FBSJ
+    </select>
+
+
+</mapper>

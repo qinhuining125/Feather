@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feather.community.mapper.ZhsqLdMapper">
+    
+    <resultMap type="ZhsqLd" id="ZhsqLdResult">
+        <result property="ldid"    column="ldid"    />
+        <result property="ldmc"    column="ldmc"    />
+        <result property="jzwmj"   column="jzwmj"    />
+        <result property="cs"      column="cs"    />
+        <result property="xqid"    column="xqid"    />
+        <result property="sqid"    column="sqid"    />
+        <result property="ssjd"    column="ssjd"    />
+        <result property="x"       column="x"    />
+        <result property="y"       column="y"    />
+        <result property="z"       column="z"    />
+    </resultMap>
+
+    <sql id="selectZhsqLdVo">
+        select ldid, ldmc, jzwmj, cs, xqid, sqid, ssjd, x, y, z from zhsq_ld
+    </sql>
+
+    <select id="selectZhsqLdList" parameterType="ZhsqLd" resultMap="ZhsqLdResult">
+        <include refid="selectZhsqLdVo"/>
+        <where>  
+            <if test="ldid != null  and ldid != ''"> and ldid = #{ldid}</if>
+            <if test="ldmc != null  and ldmc != ''">
+                <bind name="_ldmc" value="'%'+ ldmc +'%'"/>
+                and ldmc like #{_ldmc}
+            </if>
+            <if test="jzwmj != null  and jzwmj != ''"> and jzwmj = #{jzwmj}</if>
+            <if test="cs != null  and cs != ''"> and cs = #{cs}</if>
+            <if test="xqid != null  and xqid != ''"> and xqid = #{xqid}</if>
+            <if test="sqid != null  and sqid != ''"> and sqid = #{sqid}</if>
+            <if test="ssjd != null  and ssjd != ''"> and ssjd = #{ssjd}</if>
+        </where>
+    </select>
+
+    <select id="selectZhsqLdType" resultType="map">
+        SELECT ldid AS "dictLabel", ldmc AS "dictValue" FROM zhsq_ld
+    </select>
+
+    <select id="selectZhsqLdById" parameterType="String" resultMap="ZhsqLdResult">
+        <include refid="selectZhsqLdVo"/>
+        where ldid = #{ldid}
+    </select>
+        
+    <insert id="insertZhsqLd" parameterType="ZhsqLd">
+        insert into zhsq_ld
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ldid != null  and ldid != ''">ldid,</if>
+            <if test="ldmc != null  and ldmc != ''">ldmc,</if>
+            <if test="jzwmj != null  and jzwmj != ''">jzwmj,</if>
+            <if test="cs != null  and cs != ''">cs,</if>
+            <if test="xqid != null  and xqid != ''">xqid,</if>
+            <if test="sqid != null  and sqid != ''">sqid,</if>
+            <if test="ssjd != null  and ssjd != ''">ssjd,</if>
+            <if test="x != null  and x != ''">x,</if>
+            <if test="y != null  and y != ''">y,</if>
+            <if test="z != null  and z != ''">z,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ldid != null  and ldid != ''">#{ldid},</if>
+            <if test="ldmc != null  and ldmc != ''">#{ldmc},</if>
+            <if test="jzwmj != null  and jzwmj != ''">#{jzwmj},</if>
+            <if test="cs != null  and cs != ''">#{cs},</if>
+            <if test="xqid != null  and xqid != ''">#{xqid},</if>
+            <if test="sqid != null  and sqid != ''">#{sqid},</if>
+            <if test="ssjd != null  and ssjd != ''">#{ssjd},</if>
+            <if test="x != null  and x != ''">#{x},</if>
+            <if test="y != null  and y != ''">#{y},</if>
+            <if test="z != null  and z != ''">#{z},</if>
+         </trim>
+    </insert>
+
+    <update id="updateZhsqLd" parameterType="ZhsqLd">
+        update zhsq_ld
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ldmc != null  and ldmc != ''">ldmc = #{ldmc},</if>
+            <if test="jzwmj != null  and jzwmj != ''">jzwmj = #{jzwmj},</if>
+            <if test="cs != null  and cs != ''">cs = #{cs},</if>
+            <if test="xqid != null  and xqid != ''">xqid = #{xqid},</if>
+            <if test="sqid != null  and sqid != ''">sqid = #{sqid},</if>
+            <if test="ssjd != null  and ssjd != ''">ssjd = #{ssjd},</if>
+            <if test="x != null  and x != ''">x = #{x},</if>
+            <if test="y != null  and y != ''">y = #{y},</if>
+            <if test="z != null  and z != ''">z = #{z},</if>
+        </trim>
+        where ldid = #{ldid}
+    </update>
+
+    <delete id="deleteZhsqLdById" parameterType="String">
+        delete from zhsq_ld where ldid = #{ldid}
+    </delete>
+
+    <delete id="deleteZhsqLdByIds" parameterType="String">
+        delete from zhsq_ld where ldid in
+        <foreach item="ldid" collection="array" open="(" separator="," close=")">
+            #{ldid}
+        </foreach>
+    </delete>
+    
+</mapper>

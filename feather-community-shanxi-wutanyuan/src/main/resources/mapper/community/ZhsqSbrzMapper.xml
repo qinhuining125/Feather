@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feather.community.mapper.ZhsqSbrzMapper">
+    
+    <resultMap type="ZhsqSbrz" id="ZhsqSbrzResult">
+        <result property="createByid"    column="create_byid"    />
+        <result property="sbrzid"    column="sbrzid"    />
+        <result property="deviceCode"    column="device_code"    />
+        <result property="remark"    column="remark"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="deviceSettleDay"    column="device_settle_day"    />
+        <result property="deviceSettleDayData"    column="device_settle_day_data"    />
+        <result property="deviceTotalData"    column="device_total_data"    />
+        <result property="deviceStatus"    column="device_status"    />
+        <result property="deviceVoltage"    column="device_voltage"    />
+        <result property="deviceRssi"    column="device_rssi"    />
+        <result property="deviceClock"    column="device_clock"    />
+        <result property="updateByid"    column="update_byid"    />
+    </resultMap>
+
+    <sql id="selectZhsqSbrzVo">
+        select create_byid, sbrzid, device_code, remark, update_time, update_by, create_time, create_by, device_settle_day, device_settle_day_data, device_total_data, device_status, device_voltage, device_rssi, device_clock, update_byid from ZHSQ_SBRZ
+    </sql>
+
+    <select id="selectZhsqSbrzList" parameterType="ZhsqSbrz" resultMap="ZhsqSbrzResult">
+        <include refid="selectZhsqSbrzVo"/>
+        <where>  
+            <if test="createByid != null "> and create_byid = #{createByid}</if>
+            <if test="deviceCode != null  and deviceCode != ''"> and device_code = #{deviceCode}</if>
+            <if test="remark != null  and remark != ''"> and remark = #{remark}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="updateBy != null  and updateBy != ''"> and update_by = #{updateBy}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="createBy != null  and createBy != ''"> and create_by = #{createBy}</if>
+            <if test="deviceSettleDay != null "> and device_settle_day = #{deviceSettleDay}</if>
+            <if test="deviceSettleDayData != null "> and device_settle_day_data = #{deviceSettleDayData}</if>
+            <if test="deviceTotalData != null "> and device_total_data = #{deviceTotalData}</if>
+            <if test="deviceStatus != null  and deviceStatus != ''"> and device_status = #{deviceStatus}</if>
+            <if test="deviceVoltage != null  and deviceVoltage != ''"> and device_voltage = #{deviceVoltage}</if>
+            <if test="deviceRssi != null "> and device_rssi = #{deviceRssi}</if>
+            <if test="deviceClock != null  and deviceClock != ''"> and device_clock = #{deviceClock}</if>
+            <if test="updateByid != null "> and update_byid = #{updateByid}</if>
+        </where>
+    </select>
+    
+    <select id="selectZhsqSbrzById" parameterType="String" resultMap="ZhsqSbrzResult">
+        <include refid="selectZhsqSbrzVo"/>
+        where sbrzid = #{sbrzid}
+    </select>
+    <select id="get5DayData" parameterType="String" resultMap="ZhsqSbrzResult">
+        <include refid="selectZhsqSbrzVo"/>
+        where DEVICE_CLOCK LIKE CONCAT(#{current},'%')   ORDER BY UPDATE_TIME DESC
+    </select>
+
+
+    <insert id="insertZhsqSbrz" parameterType="ZhsqSbrz">
+        insert into ZHSQ_SBRZ
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createByid != null ">create_byid,</if>
+            <if test="sbrzid != null  and sbrzid != ''">sbrzid,</if>
+            <if test="deviceCode != null  and deviceCode != ''">device_code,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="deviceSettleDay != null ">device_settle_day,</if>
+            <if test="deviceSettleDayData != null ">device_settle_day_data,</if>
+            <if test="deviceTotalData != null ">device_total_data,</if>
+            <if test="deviceStatus != null  and deviceStatus != ''">device_status,</if>
+            <if test="deviceVoltage != null  and deviceVoltage != ''">device_voltage,</if>
+            <if test="deviceRssi != null ">device_rssi,</if>
+            <if test="deviceClock != null  and deviceClock != ''">device_clock,</if>
+            <if test="updateByid != null ">update_byid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createByid != null ">#{createByid},</if>
+            <if test="sbrzid != null  and sbrzid != ''">#{sbrzid},</if>
+            <if test="deviceCode != null  and deviceCode != ''">#{deviceCode},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="deviceSettleDay != null ">#{deviceSettleDay},</if>
+            <if test="deviceSettleDayData != null ">#{deviceSettleDayData},</if>
+            <if test="deviceTotalData != null ">#{deviceTotalData},</if>
+            <if test="deviceStatus != null  and deviceStatus != ''">#{deviceStatus},</if>
+            <if test="deviceVoltage != null  and deviceVoltage != ''">#{deviceVoltage},</if>
+            <if test="deviceRssi != null ">#{deviceRssi},</if>
+            <if test="deviceClock != null  and deviceClock != ''">#{deviceClock},</if>
+            <if test="updateByid != null ">#{updateByid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateZhsqSbrz" parameterType="ZhsqSbrz">
+        update ZHSQ_SBRZ
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createByid != null ">create_byid = #{createByid},</if>
+            <if test="deviceCode != null  and deviceCode != ''">device_code = #{deviceCode},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="deviceSettleDay != null ">device_settle_day = #{deviceSettleDay},</if>
+            <if test="deviceSettleDayData != null ">device_settle_day_data = #{deviceSettleDayData},</if>
+            <if test="deviceTotalData != null ">device_total_data = #{deviceTotalData},</if>
+            <if test="deviceStatus != null  and deviceStatus != ''">device_status = #{deviceStatus},</if>
+            <if test="deviceVoltage != null  and deviceVoltage != ''">device_voltage = #{deviceVoltage},</if>
+            <if test="deviceRssi != null ">device_rssi = #{deviceRssi},</if>
+            <if test="deviceClock != null  and deviceClock != ''">device_clock = #{deviceClock},</if>
+            <if test="updateByid != null ">update_byid = #{updateByid},</if>
+        </trim>
+        where sbrzid = #{sbrzid}
+    </update>
+
+    <delete id="deleteZhsqSbrzById" parameterType="String">
+        delete from ZHSQ_SBRZ where sbrzid = #{sbrzid}
+    </delete>
+
+    <delete id="deleteZhsqSbrzByIds" parameterType="String">
+        delete from ZHSQ_SBRZ where sbrzid in 
+        <foreach item="sbrzid" collection="array" open="(" separator="," close=")">
+            #{sbrzid}
+        </foreach>
+    </delete>
+    
+</mapper>

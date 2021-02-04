@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>feather</artifactId>
+        <groupId>com.feather</groupId>
+        <version>4.0.0</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>war</packaging>
+    <artifactId>feather-admin</artifactId>
+    <description>web服务入口</description>
+
+    <dependencies>
+
+		<!--========== 模块 ==========-->
+        <!-- 定时任务（根据打包需要配置，不要提交svn） -->
+        <!-- <dependency>
+            <groupId>com.feather</groupId>
+            <artifactId>feather-quartz</artifactId>
+        </dependency> -->
+
+        <!-- 代码生成（根据打包需要配置，不要提交svn） -->
+        <dependency>
+            <groupId>com.feather</groupId>
+            <artifactId>feather-generator</artifactId>
+        </dependency>
+        
+
+        <!-- 业务模块（根据打包需要配置，不要提交svn） -->
+        <dependency>
+            <groupId>com.feather</groupId>
+            <artifactId>feather-community-shanxi-wutanyuan</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<warName>${artifactId}</warName>
+				</configuration>
+			</plugin>
+        </plugins>
+		<finalName>${artifactId}</finalName>
+    </build>
+
+</project>

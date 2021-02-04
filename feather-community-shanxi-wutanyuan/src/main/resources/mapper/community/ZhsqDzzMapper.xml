@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feather.community.mapper.ZhsqDzzMapper">
+    
+    <resultMap type="ZhsqDzz" id="ZhsqDzzResult">
+        <result property="dzzid"   column="dzzid"    />
+        <result property="mc"      column="mc"    />
+        <result property="x"       column="x"    />
+        <result property="y"       column="y"    />
+        <result property="z"       column="z"    />
+        <result property="wz"      column="wz"    />
+        <result property="xqid"    column="xqid"    />
+        <result property="sqid"    column="sqid"    />
+    </resultMap>
+
+    <sql id="selectZhsqDzzVo">
+        select dzzid, mc, x, y, z, wz, xqid, sqid from zhsq_dzz
+    </sql>
+
+    <select id="selectZhsqDzzList" parameterType="ZhsqDzz" resultMap="ZhsqDzzResult">
+        <include refid="selectZhsqDzzVo"/>
+        <where>  
+            <if test="dzzid != null  and dzzid != ''"> and dzzid = #{dzzid}</if>
+            <if test="mc != null  and mc != ''">
+                <bind name="_mc" value="'%'+ mc +'%'"/>
+                AND mc like #{_mc}
+            </if>
+            <if test="x != null  and x != ''"> and x = #{x}</if>
+            <if test="y != null  and y != ''"> and y = #{y}</if>
+            <if test="z != null  and z != ''"> and z = #{z}</if>
+            <if test="wz != null  and wz != ''"> and wz = #{wz}</if>
+            <if test="xqid != null  and xqid != ''"> and xqid = #{xqid}</if>
+            <if test="sqid != null  and sqid != ''"> and sqid = #{sqid}</if>
+        </where>
+    </select>
+    
+    <select id="selectZhsqDzzById" parameterType="String" resultMap="ZhsqDzzResult">
+        <include refid="selectZhsqDzzVo"/>
+        where dzzid = #{dzzid}
+    </select>
+        
+    <insert id="insertZhsqDzz" parameterType="ZhsqDzz">
+        insert into zhsq_dzz
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dzzid != null  and dzzid != ''">dzzid,</if>
+            <if test="mc != null  and mc != ''">mc,</if>
+            <if test="x != null  and x != ''">x,</if>
+            <if test="y != null  and y != ''">y,</if>
+            <if test="z != null  and z != ''">z,</if>
+            <if test="wz != null  and wz != ''">wz,</if>
+            <if test="xqid != null  and xqid != ''">xqid,</if>
+            <if test="sqid != null  and sqid != ''">sqid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dzzid != null  and dzzid != ''">#{dzzid},</if>
+            <if test="mc != null  and mc != ''">#{mc},</if>
+            <if test="x != null  and x != ''">#{x},</if>
+            <if test="y != null  and y != ''">#{y},</if>
+            <if test="z != null  and z != ''">#{z},</if>
+            <if test="wz != null  and wz != ''">#{wz},</if>
+            <if test="xqid != null  and xqid != ''">#{xqid},</if>
+            <if test="sqid != null  and sqid != ''">#{sqid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateZhsqDzz" parameterType="ZhsqDzz">
+        update zhsq_dzz
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mc != null  and mc != ''">mc = #{mc},</if>
+            <if test="x != null  and x != ''">x = #{x},</if>
+            <if test="y != null  and y != ''">y = #{y},</if>
+            <if test="z != null  and z != ''">z = #{z},</if>
+            <if test="wz != null  and wz != ''">wz = #{wz},</if>
+            <if test="xqid != null  and xqid != ''">xqid = #{xqid},</if>
+            <if test="sqid != null  and sqid != ''">sqid = #{sqid},</if>
+        </trim>
+        where dzzid = #{dzzid}
+    </update>
+
+    <delete id="deleteZhsqDzzById" parameterType="String">
+        delete from zhsq_dzz where dzzid = #{dzzid}
+    </delete>
+
+    <delete id="deleteZhsqDzzByIds" parameterType="String">
+        delete from zhsq_dzz where dzzid in
+        <foreach item="dzzid" collection="array" open="(" separator="," close=")">
+            #{dzzid}
+        </foreach>
+    </delete>
+    
+</mapper>

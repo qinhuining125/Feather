@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('烟感日志列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <p>烟感日志ID：</p>
+                                <input type="text" name="sbrzid"/>
+                            </li>
+                            <li>
+                                <p>SN：</p>
+                                <input type="text" name="sn"/>
+                            </li>
+                            <li>
+                                <p>IMSI：</p>
+                                <input type="text" name="imsi"/>
+                            </li>
+                            <li>
+                                <p>信号强度：</p>
+                                <input type="text" name="rssi"/>
+                            </li>
+                            <li>
+                                <p>电池：</p>
+                                <input type="text" name="baterry"/>
+                            </li>
+                            <li>
+                                <p>烟感状态：</p>
+                                <select name="infotype" th:with="type=${@dict.getType('${dictType}')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <p>烟感报警 ：</p>
+                                <input type="text" name="content"/>
+                            </li>
+                            <li class="select-time">
+                                <p>创建时间：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginCreateTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endCreateTime]"/>
+                            </li>
+                            <li class="select-time">
+                                <p>更新时间：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginUpdateTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endUpdateTime]"/>
+                            </li>
+                            <li>
+                                <p>备注：</p>
+                                <input type="text" name="remark"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="community:ygrz:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="community:ygrz:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="community:ygrz:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="community:ygrz:export">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table" data-mobile-responsive="true"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('community:ygrz:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('community:ygrz:remove')}]];
+        var sbrzidDatas = [[${@dict.getType('${column.dictType}')}]];
+        var snDatas = [[${@dict.getType('${column.dictType}')}]];
+        var imsiDatas = [[${@dict.getType('${column.dictType}')}]];
+        var rssiDatas = [[${@dict.getType('${column.dictType}')}]];
+        var baterryDatas = [[${@dict.getType('${column.dictType}')}]];
+        var infotypeDatas = [[${@dict.getType('${column.dictType}')}]];
+        var contentDatas = [[${@dict.getType('${column.dictType}')}]];
+        var createByDatas = [[${@dict.getType('${column.dictType}')}]];
+        var createTimeDatas = [[${@dict.getType('${column.dictType}')}]];
+        var updateByDatas = [[${@dict.getType('${column.dictType}')}]];
+        var updateTimeDatas = [[${@dict.getType('${column.dictType}')}]];
+        var remarkDatas = [[${@dict.getType('${column.dictType}')}]];
+        var createByidDatas = [[${@dict.getType('${column.dictType}')}]];
+        var updateByidDatas = [[${@dict.getType('${column.dictType}')}]];
+        var ygidDatas = [[${@dict.getType('${column.dictType}')}]];
+        var prefix = ctx + "community/ygrz";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "烟感日志",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field : 'sbrzid', 
+                    title : '烟感日志ID',
+                },
+                {
+                    field : 'sn', 
+                    title : 'SN',
+                },
+                {
+                    field : 'imsi', 
+                    title : 'IMSI',
+                },
+                {
+                    field : 'rssi', 
+                    title : '信号强度',
+                },
+                {
+                    field : 'baterry', 
+                    title : '电池',
+                },
+                {
+                    field : 'infotype', 
+                    title : '状态（7解绑 2烟感报警）',
+                },
+                {
+                    field : 'content', 
+                    title : '烟感报警（1烟感报警 2烟感防拆报警 3低电量报警"）',
+                },
+                {
+                    field : 'createTime', 
+                    title : '创建时间',
+                },
+                {
+                    field : 'updateTime', 
+                    title : '更新时间',
+                },
+                {
+                    field : 'remark', 
+                    title : '备注',
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.sbrzid + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.sbrzid + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

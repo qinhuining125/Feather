@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feather.community.mapper.ZhsqSbMapper">
+
+    <resultMap type="ZhsqSb" id="ZhsqSbResult">
+        <result property="deviceCode"    column="device_code"    />
+        <result property="sblx"    column="sblx"    />
+        <result property="sbmc"    column="sbmc"    />
+        <result property="ppmc"    column="ppmc"    />
+        <result property="sbxh"    column="sbxh"    />
+        <result property="sbzt"    column="sbzt"    />
+        <result property="x"    column="x"    />
+        <result property="y"    column="y"    />
+        <result property="z"    column="z"    />
+        <result property="wz"    column="wz"    />
+        <result property="ldid"    column="ldid"    />
+        <result property="xqid"    column="xqid"    />
+        <result property="sqid"    column="sqid"    />
+    </resultMap>
+
+    <sql id="selectZhsqSbVo">
+        select device_code, sblx, sbmc, ppmc, sbxh, sbzt, x, y, z, wz, ldid, xqid, sqid from zhsq_sb
+    </sql>
+
+    <select id="selectZhsqSbList" parameterType="ZhsqSb" resultMap="ZhsqSbResult">
+        <include refid="selectZhsqSbVo"/>
+        <where>
+            <if test="deviceCode != null  and deviceCode != ''"> and device_code = #{deviceCode}</if>
+            <if test="sblx != null  and sblx != ''"> and sblx = #{sblx}</if>
+            <if test="sbmc != null  and sbmc != ''"> and sbmc = #{sbmc}</if>
+            <if test="ppmc != null  and ppmc != ''"> and ppmc = #{ppmc}</if>
+            <if test="sbxh != null  and sbxh != ''"> and sbxh = #{sbxh}</if>
+            <if test="sbzt != null  and sbzt != ''"> and sbzt = #{sbzt}</if>
+            <if test="x != null  and x != ''"> and x = #{x}</if>
+            <if test="y != null  and y != ''"> and y = #{y}</if>
+            <if test="z != null  and z != ''"> and z = #{z}</if>
+            <if test="wz != null  and wz != ''"> and wz = #{wz}</if>
+            <if test="ldid != null  and ldid != ''"> and ldid = #{ldid}</if>
+            <if test="xqid != null  and xqid != ''"> and xqid = #{xqid}</if>
+            <if test="sqid != null  and sqid != ''"> and sqid = #{sqid}</if>
+        </where>
+    </select>
+
+    <select id="selectZhsqSbById" parameterType="String" resultMap="ZhsqSbResult">
+        <include refid="selectZhsqSbVo"/>
+        where device_code = #{deviceCode}
+    </select>
+
+    <insert id="insertZhsqSb" parameterType="ZhsqSb">
+        insert into zhsq_sb
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceCode != null  and deviceCode != ''">device_code,</if>
+            <if test="sblx != null  and sblx != ''">sblx,</if>
+            <if test="sbmc != null  and sbmc != ''">sbmc,</if>
+            <if test="ppmc != null  and ppmc != ''">ppmc,</if>
+            <if test="sbxh != null  and sbxh != ''">sbxh,</if>
+            <if test="sbzt != null  and sbzt != ''">sbzt,</if>
+            <if test="x != null  and x != ''">x,</if>
+            <if test="y != null  and y != ''">y,</if>
+            <if test="z != null  and z != ''">z,</if>
+            <if test="wz != null  and wz != ''">wz,</if>
+            <if test="ldid != null  and ldid != ''">ldid,</if>
+            <if test="xqid != null  and xqid != ''">xqid,</if>
+            <if test="sqid != null  and sqid != ''">sqid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceCode != null  and deviceCode != ''">#{deviceCode},</if>
+            <if test="sblx != null  and sblx != ''">#{sblx},</if>
+            <if test="sbmc != null  and sbmc != ''">#{sbmc},</if>
+            <if test="ppmc != null  and ppmc != ''">#{ppmc},</if>
+            <if test="sbxh != null  and sbxh != ''">#{sbxh},</if>
+            <if test="sbzt != null  and sbzt != ''">#{sbzt},</if>
+            <if test="x != null  and x != ''">#{x},</if>
+            <if test="y != null  and y != ''">#{y},</if>
+            <if test="z != null  and z != ''">#{z},</if>
+            <if test="wz != null  and wz != ''">#{wz},</if>
+            <if test="ldid != null  and ldid != ''">#{ldid},</if>
+            <if test="xqid != null  and xqid != ''">#{xqid},</if>
+            <if test="sqid != null  and sqid != ''">#{sqid},</if>
+        </trim>
+    </insert>
+
+    <update id="updateZhsqSb" parameterType="ZhsqSb">
+        update zhsq_sb
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sblx != null  and sblx != ''">sblx = #{sblx},</if>
+            <if test="sbmc != null  and sbmc != ''">sbmc = #{sbmc},</if>
+            <if test="ppmc != null  and ppmc != ''">ppmc = #{ppmc},</if>
+            <if test="sbxh != null  and sbxh != ''">sbxh = #{sbxh},</if>
+            <if test="sbzt != null  and sbzt != ''">sbzt = #{sbzt},</if>
+            <if test="x != null  and x != ''">x = #{x},</if>
+            <if test="y != null  and y != ''">y = #{y},</if>
+            <if test="z != null  and z != ''">z = #{z},</if>
+            <if test="wz != null  and wz != ''">wz = #{wz},</if>
+            <if test="ldid != null  and ldid != ''">ldid = #{ldid},</if>
+            <if test="xqid != null  and xqid != ''">xqid = #{xqid},</if>
+            <if test="sqid != null  and sqid != ''">sqid = #{sqid},</if>
+        </trim>
+        where device_code = #{deviceCode}
+    </update>
+
+    <delete id="deleteZhsqSbById" parameterType="String">
+        delete from zhsq_sb where device_code = #{deviceCode}
+    </delete>
+
+    <delete id="deleteZhsqSbByIds" parameterType="String">
+        delete from zhsq_sb where device_code in
+        <foreach item="deviceCode" collection="array" open="(" separator="," close=")">
+            #{deviceCode}
+        </foreach>
+    </delete>
+
+</mapper>

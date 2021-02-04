@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feather.community.mapper.ZhsqShrzMapper">
+
+    <resultMap type="ZhsqShrz" id="ZhsqShrzResult">
+        <result property="shrzid"    column="shrzid"    />
+        <result property="high"    column="gy"    />
+        <result property="low"    column="dy"    />
+        <result property="heartRate"    column="xl"    />
+        <result property="bloodOxygen"    column="xy"    />
+        <result property="temperature"    column="tw"    />
+        <result property="gpsLat"    column="gpswd"    />
+        <result property="gpsLng"    column="gpsjd"    />
+        <result property="gpsIsValid"    column="gpsvalid"    />
+        <result property="nodeBLat"    column="nodewd"    />
+        <result property="nodeBLng"    column="nodejd"    />
+        <result property="battery"    column="dl"    />
+        <result property="alarmState"    column="bj"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"  jdbcType="BIGINT"  />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"  jdbcType="BIGINT" />
+        <result property="remark"    column="remark"    />
+        <result property="createByid"    column="create_byid"    />
+        <result property="updateByid"    column="update_byid"    />
+        <result property="wearState"    column="sfpd"   />
+        <result property="chargeState"    column="sfcd"   />
+        <result property="shid"    column="shid"    />
+    </resultMap>
+
+    <sql id="selectZhsqShrzVo">
+        select shrzid, gy , dy , xl , xy , tw , gpswd , gpsjd , gpsvalid , nodewd , nodejd , dl , bj  , create_by, create_time, update_by, update_time, remark, create_byid, update_byid, sfpd , sfcd , shid from zhsq_shrz
+    </sql>
+
+    <select id="selectZhsqShrzList" parameterType="ZhsqShrz" resultMap="ZhsqShrzResult">
+        <include refid="selectZhsqShrzVo"/>
+        <where>
+        </where>
+    </select>
+
+    <select id="selectZhsqShrzById" parameterType="String" resultMap="ZhsqShrzResult">
+        <include refid="selectZhsqShrzVo"/>
+        where shrzid = #{shrzid}
+    </select>
+
+    <insert id="insertZhsqShrz" parameterType="ZhsqShrz">
+        insert into zhsq_shrz
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shrzid != null  and shrzid != ''">shrzid,</if>
+            <if test="high != null  and high != ''">gy,</if>
+            <if test="low != null  and low != ''">dy,</if>
+            <if test="heartRate != null  and heartRate != ''">xl,</if>
+            <if test="bloodOxygen != null  and bloodOxygen != ''">xy,</if>
+            <if test="temperature != null  and temperature != ''">tw,</if>
+            <if test="gpsLat != null  and gpsLat != ''">gpswd,</if>
+            <if test="gpsLng != null  and gpsLng != ''">gpsjd,</if>
+            <if test="gpsIsValid != null  and  gpsIsValid != ''">gpsvalid,</if>
+            <if test="nodeBLat != null  and nodeBLat != ''">nodewd,</if>
+            <if test="nodeBLng != null  and nodeBLng != ''">nodejd,</if>
+            <if test="battery != null  and battery != ''">dl,</if>
+            <if test="alarmState != null  and alarmState != ''">bj,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+            <if test="createByid != null ">create_byid,</if>
+            <if test="updateByid != null ">update_byid,</if>
+            <if test="wearState != null  and wearState != ''">sfpd,</if>
+            <if test="chargeState != null  and chargeState != ''">sfcd,</if>
+            <if test="shid != null  and shid != ''">shid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shrzid != null  and shrzid != ''">#{shrzid},</if>
+            <if test="high != null  and high != ''">#{high},</if>
+            <if test="low != null  and low != ''">#{low},</if>
+            <if test="heartRate != null  and heartRate != ''">#{heartRate},</if>
+            <if test="bloodOxygen != null  and bloodOxygen != ''">#{bloodOxygen},</if>
+            <if test="temperature!= null  and temperature != ''">#{temperature},</if>
+            <if test="gpsLat != null  and gpsLat != ''">#{gpsLat},</if>
+            <if test="gpsLng != null  and gpsLng != ''">#{gpsLng},</if>
+            <if test="gpsIsValid != null  and  gpsIsValid != ''">#{gpsIsValid},</if>
+            <if test="nodeBLat != null  and nodeBLat != ''">#{nodeBLat},</if>
+            <if test="nodeBLng != null  and nodeBLng != ''">#{nodeBLng},</if>
+            <if test="battery != null  and battery != ''">#{battery},</if>
+            <if test="alarmState != null  and alarmState != ''">#{alarmState},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime, jdbcType=BIGINT},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime, jdbcType=BIGINT},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+            <if test="createByid != null ">#{createByid},</if>
+            <if test="updateByid != null ">#{updateByid},</if>
+            <if test="wearState != null  and wearState != ''">#{wearState},</if>
+            <if test="chargeState != null  and chargeState != ''">#{chargeState},</if>
+            <if test="shid != null  and shid != ''">#{shid},</if>
+        </trim>
+    </insert>
+
+    <update id="updateZhsqShrz" parameterType="ZhsqShrz">
+        update zhsq_shrz
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="gy != null  and gy != ''">gy = #{gy},</if>
+            <if test="dy != null  and dy != ''">dy = #{dy},</if>
+            <if test="xl != null  and xl != ''">xl = #{xl},</if>
+            <if test="xy != null  and xy != ''">xy = #{xy},</if>
+            <if test="tw != null  and tw != ''">tw = #{tw},</if>
+            <if test="gpsLat != null  and gpsLat != ''">gpswd = #{gpsLat},</if>
+            <if test="gpsLng != null  and gpsLng != ''">gpsjd = #{gpsLng},</if>
+            <if test="gpsIsValid != null  and  gpsIsValid != ''">gpsvalid = #{gpsIsValid},</if>
+            <if test="nodeBLat != null  and nodeBLat != ''">nodeBLat = #{nodeBLat},</if>
+            <if test="nodeBLng != null  and nodeBLng != ''">nodeBLng = #{nodeBLng},</if>
+            <if test="dl != null  and dl != ''">dl = #{dl},</if>
+            <if test="bj != null  and bj != ''">bj = #{bj},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime, jdbcType=BIGINT},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime, jdbcType=BIGINT},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="createByid != null ">create_byid = #{createByid},</if>
+            <if test="updateByid != null ">update_byid = #{updateByid},</if>
+            <if test="sfpd != null  and sfpd != ''">sfpd = #{sfpd},</if>
+            <if test="sfcd != null  and sfcd != ''">sfcd = #{sfcd},</if>
+            <if test="shid != null  and shid != ''">shid = #{shid},</if>
+        </trim>
+        where shrzid = #{shrzid}
+    </update>
+
+    <delete id="deleteZhsqShrzById" parameterType="String">
+        delete from zhsq_shrz where shrzid = #{shrzid}
+    </delete>
+
+    <delete id="deleteZhsqShrzByIds" parameterType="String">
+        delete from zhsq_shrz where shrzid in
+        <foreach item="shrzid" collection="array" open="(" separator="," close=")">
+            #{shrzid}
+        </foreach>
+    </delete>
+
+</mapper>
